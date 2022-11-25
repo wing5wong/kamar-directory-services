@@ -17,9 +17,9 @@ class Success extends AbstractResponse
     {
         parent::__construct();
 
-        $this->infoUrl = config('kamar.infoUrl');
-        $this->privacyStatement = config('kamar.privacyStatement');
-        $this->options = config('kamar.options');
+        $this->infoUrl = config('kamar-directory-services.infoUrl');
+        $this->privacyStatement = config('kamar-directory-services.privacyStatement');
+        $this->options = config('kamar-directory-services.options');
         
         $this->additionalFields = [
             'status' => $this->status,
