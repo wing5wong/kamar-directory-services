@@ -32,7 +32,7 @@ class KamarDirectoryServicesServiceProvider extends ServiceProvider
         }
 
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
-            $schedule->command(RemoveOldDataFilesaFiles::class)->daily();
+            $schedule->command(RemoveOldDataFiles::class)->daily();
         });
     }
 
