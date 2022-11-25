@@ -80,7 +80,7 @@ class ResponsesTest extends TestCase
 
     private function validCredentials()
     {
-        return "Basic " . base64_encode(config('kamar.username') . ':' . config('kamar.password'));
+        return "Basic " . base64_encode(config('kamar-directory-services.username') . ':' . config('kamar-directory-services.password'));
     }
 
     private function invalidCredentials()
