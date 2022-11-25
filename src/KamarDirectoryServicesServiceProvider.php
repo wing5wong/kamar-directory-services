@@ -43,23 +43,7 @@ class KamarDirectoryServicesServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-
         $this->mergeConfigFrom(__DIR__ . '/../config/kamar-directory-services.php', 'kamar-directory-services');
-
-        // Register the service the package provides.
-        // $this->app->singleton('kamar-directory-services', function ($app) {
-        //     return new KamarDirectoryService;
-        // });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['kamar-directory-services'];
     }
 
     /**
