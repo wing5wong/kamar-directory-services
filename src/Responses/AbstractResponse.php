@@ -14,8 +14,8 @@ abstract class AbstractResponse implements Arrayable
 
     public function __construct()
     {
-        $this->service = config('kamar.serviceName');
-        $this->version = config('kamar.serviceVersion');
+        $this->service = config('kamar-directory-services.serviceName');
+        $this->version = config('kamar-directory-services.serviceVersion');
     }
 
     public function toArray()
