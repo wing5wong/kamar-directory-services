@@ -1,14 +1,17 @@
 # KAMAR Directory Service Example
 
 ## Initial Configuration
-Copy the `.env.example` to `.env` and set the values for:
+Set the values for the following in your `.env` file:
 - `KAMAR_DS_USERNAME` Your Directory Service Username
 - `KAMAR_DS_PASSWORD` Your Directory Service Password
 - `KAMAR_DS_FORMAT` Your Directory Service Format (json|xml)
 
 __Do not set Username and Password values in the config file.__
 
-Set the values in `/config/kamar.php` for:
+Publish the config file:
+`php artisan vendor:publish --tag=kamar-directory-services.config`
+
+Set the values in `/config/kamar-directory-services.php` for:
 - `serviceName` e.g. "Kamar Directory Service"
 - `serviceVersion` e.g. 1.0
 - `infoUrl` e.g. "https://www.myschool.co.nz/more-info"
@@ -16,12 +19,12 @@ Set the values in `/config/kamar.php` for:
 - `options` The options to be requested for your directory service
 
 ## Routes
-A single route is defined in `/app/routes/kamar.php` accepting `POST` requests to `/kamar`.  
-The route is handled by `/app/Http/Controllers/HandleKamarPost.php`.  
+A single route is defined accepting `POST` requests to `/kamar`.  
+The route is handled by `/Controllers/HandleKamarPost.php`.  
 Base functionality as described in the KAMAR example is implemented here, but you are free to adjust to suit your requirements.
 
 ## Middleware
-A new `kamar` middleware group is created in `/app/Http/Kernel.php`.  
+A new `kamar` middleware group is defined.  
 The group is the same as the default `web` group, but has the csrf middleware removed.  
 You MUST make sure you are authenticating requests to your application.  
 
@@ -30,7 +33,7 @@ The example implementation will write json data files at `/storage/app/data`. Th
 
 ## Commands & Schedules
 A `RemoveOldDataFiles` command is available that will remove files older than 3 days.
-A schedule to run the command daily is also configured (`/app/Console/Kernel.php`)
+A schedule to run the command daily is also configured.
 
 Run the command manually with `php artisan KamarDS:removeOldDataFiles`, or configure a cron job to run the task as per the schedule.
 
