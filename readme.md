@@ -1,4 +1,7 @@
-# KAMAR Directory Service Example
+# KAMAR Directory Services Package
+
+The package providing Kamar Directory Services functionality to the https://github.com/wing5wong/kamar-directory-service example app
+Add this package to a Laravel app and begin receiving directory service updates.
 
 ## Initial Configuration
 Set the values for the following in your `.env` file:
