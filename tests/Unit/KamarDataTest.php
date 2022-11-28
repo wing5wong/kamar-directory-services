@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Wing5wong\KamarDirectoryServices\Tests\Unit;
 
 use Illuminate\Http\Request;
 use Spatie\ArrayToXml\ArrayToXml;
-use PHPUnit\Framework\TestCase;
 use Wing5wong\KamarDirectoryServices\KamarData;
+use Wing5wong\KamarDirectoryServices\Tests\TestCase;
 
 class KamarDataTest extends TestCase
 {

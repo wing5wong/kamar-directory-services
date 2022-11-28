@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Wing5wong\KamarDirectoryServices\Tests\Feature;
 
 use Wing5wong\KamarDirectoryServices\Responses\Check\Success as CheckSuccess;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\FailedAuthentication;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\MissingData;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\Success;
-use Tests\TestCase;
+use Wing5wong\KamarDirectoryServices\Tests\TestCase;
 
 class ResponsesTest extends TestCase
 {
