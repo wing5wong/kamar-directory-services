@@ -3,7 +3,7 @@
 namespace Wing5wong\KamarDirectoryServices\Tests\Unit;
 
 use Wing5wong\KamarDirectoryServices\Auth\AuthenticationCheck;
-use Wing5wong\KamarDirectoryServices\Tests\TestCase;
+use Tests\TestCase;
 use Illuminate\Http\Request;
 
 class AuthenticationCheckTest extends TestCase

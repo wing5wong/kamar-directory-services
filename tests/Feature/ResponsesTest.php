@@ -6,7 +6,7 @@ use Wing5wong\KamarDirectoryServices\Responses\Check\Success as CheckSuccess;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\FailedAuthentication;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\MissingData;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\Success;
-use Wing5wong\KamarDirectoryServices\Tests\TestCase;
+use Tests\TestCase;
 
 class ResponsesTest extends TestCase
 {

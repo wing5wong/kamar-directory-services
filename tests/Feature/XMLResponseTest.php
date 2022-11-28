@@ -7,7 +7,7 @@ use Wing5wong\KamarDirectoryServices\Responses\Standard\XMLFailedAuthentication;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\XMLMissingData;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\XMLSuccess;
 use Spatie\ArrayToXml\ArrayToXml;
-use Wing5wong\KamarDirectoryServices\Tests\TestCase;
+use Tests\TestCase;
 
 class XMLResponseTest extends TestCase
 {
