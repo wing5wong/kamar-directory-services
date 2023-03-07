@@ -31,7 +31,8 @@ class Success extends AbstractResponse
         ];
 
         if ($this->authSuffix && $dateTime && $buildNumber) {
-            $this->additionalFields['authtoken'] = md5($dateTime . $buildNumber . $this->service . $this->infoUrl . $this->authSuffix);
+            //$this->additionalFields['authtoken'] = md5($dateTime . $buildNumber . $this->service . $this->infoUrl . $this->authSuffix);
+            $this->additionalFields['authtoken'] = md5($this->service . $this->infoUrl . $this->authSuffix);
         }
     }
 }
