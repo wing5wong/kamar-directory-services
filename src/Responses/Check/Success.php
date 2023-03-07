@@ -29,9 +29,9 @@ class Success extends AbstractResponse
             'privacystatement' => $this->privacyStatement,
             'options' => $this->options,
         ];
-        $this->additionalFields['authtoken'] = md5($dateTime . $buildNumber . $this->service . $this->infoUrl . $this->authSuffix);
+        
         if ($this->authSuffix && $dateTime && $buildNumber) {
-            //$this->additionalFields['authtoken'] = md5($dateTime . $buildNumber . $this->service . $this->infoUrl . $this->authSuffix);
+            $this->additionalFields['authtoken'] = md5($dateTime . $buildNumber . $this->service . $this->infoUrl . $this->authSuffix);
         }
     }
 }
