@@ -45,7 +45,7 @@ class HandleKamarPost extends Controller
         // Check if a 'check' sync, return check response.
         if ($this->data->isSyncCheck()) {
             if ($this->data->isJson()) {
-                return response()->json(new CheckSuccess(data_get($this->data, 'datetime'), data_get($this->data, 'version')));
+                return response()->json(new CheckSuccess(data_get($this->data, 'SMSDirectoryData.datetime'), data_get($this->data, 'SMSDirectoryData.version')));
             }
             if ($this->data->isXml()) {
                 return response()->xml((string)(new XmlCheckSuccess($dateTime  = null, $buildNumber  = null)));
