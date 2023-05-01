@@ -12,10 +12,10 @@
     "keywords": ["Laravel", "KamarDirectoryService"],
     "require": {
         "php": "^8.0.2",
-        "illuminate/support": "~9",
-        "illuminate/console": "~9",
-        "illuminate/routing": "~9",
-        "illuminate/filesystem": "~9",
+        "illuminate/support": "~10",
+        "illuminate/console": "~10",
+        "illuminate/routing": "~10",
+        "illuminate/filesystem": "~10",
         "mtownsend/request-xml": "^2.2",
         "mtownsend/response-xml": "^2.1",
         "spatie/array-to-xml": "^3.1"
