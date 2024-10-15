@@ -7,7 +7,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Routing\Router;
 use Wing5wong\KamarDirectoryServices\Commands\RemoveOldDataFiles;
 use Wing5wong\KamarDirectoryServices\Emergency\EmergencyServiceInterface;
-use Wing5wong\KamarDirectoryServices\Emergency\ViviEmergencyService;
+use Wing5wong\KamarDirectoryServices\Emergency\LogEmergencyService;
 
 class KamarDirectoryServicesServiceProvider extends ServiceProvider
 {
@@ -19,7 +19,6 @@ class KamarDirectoryServicesServiceProvider extends ServiceProvider
     public function boot(Router $router): void
     {
         $router->middlewareGroup('kamar', [
-            \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
@@ -46,7 +45,8 @@ class KamarDirectoryServicesServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/kamar-directory-services.php', 'kamar-directory-services');
-        $this->app->bind(EmergencyServiceInterface::class, ViviEmergencyService::class);
+
+        $this->app->bind(EmergencyServiceInterface::class, LogEmergencyService::class);
     }
 
     /**
