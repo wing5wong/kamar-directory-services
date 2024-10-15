@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Routing\Router;
 use Wing5wong\KamarDirectoryServices\Commands\RemoveOldDataFiles;
+use Wing5wong\KamarDirectoryServices\Emergency\EmergencyServiceInterface;
+use Wing5wong\KamarDirectoryServices\Emergency\ViviEmergencyService;
 
 class KamarDirectoryServicesServiceProvider extends ServiceProvider
 {
@@ -44,6 +46,7 @@ class KamarDirectoryServicesServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/kamar-directory-services.php', 'kamar-directory-services');
+        $this->app->bind(EmergencyServiceInterface::class, ViviEmergencyService::class);
     }
 
     /**
