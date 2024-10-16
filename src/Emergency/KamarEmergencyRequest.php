@@ -12,7 +12,6 @@ class KamarEmergencyRequest extends FormRequest
      */
     public function authorize(AuthenticationCheck $authCheck): bool
     {
-        // Check supplied username/password matches our expectation
         return ! $this->authCheck->fails();
     }
 

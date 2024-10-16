@@ -4,7 +4,7 @@ namespace Wing5wong\KamarDirectoryServices\Emergency;
 
 use Illuminate\Support\Facades\Http;
 
-class ViviEmergencyService extends AbstractEmergencyService
+class ViviEmergencyService implements EmergencyServiceInterface
 {
     protected $endpoint = 'https://api.vivi.io/api/public/v1/emergencies/trigger';
     private $apiKey;
