@@ -4,15 +4,15 @@ namespace Wing5wong\KamarDirectoryServices\Controllers;
 
 use Illuminate\Routing\Controller;
 use Wing5wong\KamarDirectoryServices\Emergency\EmergencyServiceInterface;
-use Wing5wong\KamarDirectoryServices\Emergency\KamarEmergencyRequest;
+use Wing5wong\KamarDirectoryServices\Emergency\EmergencyRequest;
 
-class HandleKamarEmergency extends Controller
+class HandleEmergency extends Controller
 {
     public function __construct(
         protected EmergencyServiceInterface $emergencyService
     ) {}
 
-    public function __invoke(KamarEmergencyRequest $request)
+    public function __invoke(EmergencyRequest $request)
     {
         $this->emergencyService->notify($request->data());
     }
