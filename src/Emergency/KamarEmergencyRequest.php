@@ -12,7 +12,7 @@ class KamarEmergencyRequest extends FormRequest
      */
     public function authorize(AuthenticationCheck $authCheck): bool
     {
-        return ! $this->authCheck->fails();
+        return ! $authCheck->fails();
     }
 
     /**
