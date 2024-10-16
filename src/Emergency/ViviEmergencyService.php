@@ -16,7 +16,7 @@ class ViviEmergencyService implements EmergencyServiceInterface
         $this->emergencyTypeId = config('kamar-directory-service.vivi.emergencyTypeId');
     }
 
-    public function notify(KamarEmergencyData $data)
+    public function notify(EmergencyData $data)
     {
         $emergencyURL = $this->endpoint . "?key=" . $this->apiKey . "&type=" . $this->emergencyTypeId;
 

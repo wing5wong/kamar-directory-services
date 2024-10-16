@@ -4,5 +4,5 @@ namespace Wing5wong\KamarDirectoryServices\Emergency;
 
 interface EmergencyServiceInterface
 {
-    public function notify(KamarEmergencyData $data);
+    public function notify(EmergencyData $data);
 }

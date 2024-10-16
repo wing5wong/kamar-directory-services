@@ -4,8 +4,16 @@ namespace Wing5wong\KamarDirectoryServices\Emergency;
 
 class LogEmergencyService implements EmergencyServiceInterface
 {
-    public function notify(KamarEmergencyData $data)
+    public function notify(EmergencyData $data)
     {
-        info('Emergency trigger: ' . $data->message);
+        info([
+            $data->message,
+            $data->groupType,
+            $data->id,
+            $data->isEmergency,
+            $data->procedure,
+            $data->status,
+            $data->unixTime,
+        ]);
     }
 }

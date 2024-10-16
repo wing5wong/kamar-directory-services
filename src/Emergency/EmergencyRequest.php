@@ -5,7 +5,7 @@ namespace Wing5wong\KamarDirectoryServices\Emergency;
 use Illuminate\Foundation\Http\FormRequest;
 use Wing5wong\KamarDirectoryServices\Auth\AuthenticationCheck;
 
-class KamarEmergencyRequest extends FormRequest
+class EmergencyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -41,9 +41,9 @@ class KamarEmergencyRequest extends FormRequest
             'status.in' => 'Must be one of:Alert, Count complete, All Clear',
         ];
     }
-    public function data(): KamarEmergencyData
+    public function data(): EmergencyData
     {
-        return new KamarEmergencyData(
+        return new EmergencyData(
             $this->validated('message'),
             $this->validated('groupType'),
             $this->validated('id'),
