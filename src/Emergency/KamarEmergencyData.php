@@ -2,7 +2,7 @@
 
 namespace Wing5wong\KamarDirectoryServices\Emergency;
 
-readonly class KamarEmergencyData
+class KamarEmergencyData
 {
     public function __construct(
         public string $message,
