@@ -2,7 +2,6 @@
 
 namespace Wing5wong\KamarDirectoryServices\Emergency;
 
-use Exception;
 use Illuminate\Support\Facades\Http;
 
 class ViviEmergencyService extends AbstractEmergencyService
@@ -17,7 +16,7 @@ class ViviEmergencyService extends AbstractEmergencyService
         $this->emergencyTypeId = config('kamar-directory-service.vivi.emergencyTypeId');
     }
 
-    public function notify($data)
+    public function notify(KamarEmergencyData $data)
     {
         $emergencyURL = $this->endpoint . "?key=" . $this->apiKey . "&type=" . $this->emergencyTypeId;
 

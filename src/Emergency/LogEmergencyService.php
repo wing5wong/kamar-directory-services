@@ -4,8 +4,7 @@ namespace Wing5wong\KamarDirectoryServices\Emergency;
 
 class LogEmergencyService extends AbstractEmergencyService
 {
-
-    public function notify($data)
+    public function notify(KamarEmergencyData $data)
     {
         info($data);
     }
