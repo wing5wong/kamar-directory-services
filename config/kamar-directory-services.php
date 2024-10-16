@@ -57,5 +57,6 @@ return [
 
     'vivi' => [
         'apiKey' => env('VIVI_API_KEY'),
+        'emergencyTypeId' => env('VIVI_EMERGENCY_TYPE_ID'),
     ]
 ];

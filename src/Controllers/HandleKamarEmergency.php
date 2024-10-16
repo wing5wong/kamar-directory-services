@@ -2,6 +2,7 @@
 
 namespace Wing5wong\KamarDirectoryServices\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Wing5wong\KamarDirectoryServices\Auth\AuthenticationCheck;
 use Wing5wong\KamarDirectoryServices\Emergency\EmergencyServiceInterface;
@@ -14,13 +15,12 @@ class HandleKamarEmergency extends Controller
         protected EmergencyServiceInterface $emergencyService
     ) {}
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         // Check supplied username/password matches our expectation
         if ($this->authCheck->fails()) {
             return response()->json(new FailedAuthentication());
         }
-
-        $this->emergencyService->notify(request()->input());
+        $this->emergencyService->notify($request->input());
     }
 }
