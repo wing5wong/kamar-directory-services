@@ -6,11 +6,11 @@ use Wing5wong\KamarDirectoryServices\Responses\Check\XMLSuccess as XMLCheckSucce
 use Wing5wong\KamarDirectoryServices\Responses\Standard\XMLFailedAuthentication;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\XMLMissingData;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\XMLSuccess;
-use Spatie\ArrayToXml\ArrayToXml;
-use Tests\TestCase;
+use Wing5wong\KamarDirectoryServices\Tests\TestCase;
 
 class XMLResponseTest extends TestCase
 {
+
     public function test_unauthenticated_standard_xml_requests_return_403()
     {
         $response = $this
@@ -161,24 +161,23 @@ class XMLResponseTest extends TestCase
     public function test_authenticated_standard_xml_requests_return_0()
     {
         $response = $this
-        ->call(
-            'POST',
-            route('kamar'),
-            [],
-            [],
-            [],
-            $this->transformHeadersToServerVars([
-                'content-type' => 'application/xml',
-                'HTTP_AUTHORIZATION' => $this->validCredentials(),
-            ]),
-            $this->xmlFullRequestXml()
+            ->call(
+                'POST',
+                route('kamar'),
+                [],
+                [],
+                [],
+                $this->transformHeadersToServerVars([
+                    'content-type' => 'application/xml',
+                    'HTTP_AUTHORIZATION' => $this->validCredentials(),
+                ]),
+                $this->xmlFullRequestXml()
+            );
+
+        $response->assertSee(
+            (string) (new XMLSuccess()),
+            false
         );
-
-    $response->assertSee(
-        (string) (new XMLSuccess()),
-        false
-    );
-
     }
 
     private function validCredentials()

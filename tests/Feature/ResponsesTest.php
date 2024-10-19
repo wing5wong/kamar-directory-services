@@ -6,10 +6,11 @@ use Wing5wong\KamarDirectoryServices\Responses\Check\Success as CheckSuccess;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\FailedAuthentication;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\MissingData;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\Success;
-use Tests\TestCase;
+use Wing5wong\KamarDirectoryServices\Tests\TestCase;
 
 class ResponsesTest extends TestCase
 {
+
     public function test_unauthenticated_standard_requests_return_403()
     {
         $response = $this->postJson(route('kamar'));
@@ -94,7 +95,7 @@ class ResponsesTest extends TestCase
             'SMSDirectoryData' => [
                 'sync' => 'part'
             ]
-            ];
+        ];
     }
 
     private function checkRequest()
@@ -103,6 +104,6 @@ class ResponsesTest extends TestCase
             'SMSDirectoryData' => [
                 'sync' => 'check'
             ]
-            ];
+        ];
     }
 }
