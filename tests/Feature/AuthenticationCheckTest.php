@@ -1,6 +1,6 @@
 <?php
 
-namespace Wing5wong\KamarDirectoryServices\Tests\Unit;
+namespace Wing5wong\KamarDirectoryServices\Tests\Feature;
 
 use Wing5wong\KamarDirectoryServices\Auth\AuthenticationCheck;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class AuthenticationCheckTest extends TestCase
     public function test_valid_credentials()
     {
         $request = new Request();
-        $request->server->replace(['HTTP_AUTHORIZATION' => "Basic " . base64_encode(config('kamar-directory-services.username') . ':' . config('kamar-directory-services.password'))]);
+        $request->server->set('HTTP_AUTHORIZATION',  "Basic " . base64_encode(config('kamar-directory-services.username') . ':' . config('kamar-directory-services.password')));
         app()->instance('request', $request);
 
         $this->assertFalse((new AuthenticationCheck())->fails());

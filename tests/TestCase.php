@@ -19,8 +19,8 @@ class TestCase extends Orchestra
         $app['config']->set('kamar-directory-services.privacyStatement', '123123123');
         $app['config']->set('kamar-directory-services.options', []);
         $app['config']->set('kamar-directory-services.authSuffix', '123123123');
-        $app['config']->set('kamar-directory-services.password', '123123123');
-        $app['config']->set('kamar-directory-services.username', '123123123');
+        $app['config']->set('kamar-directory-services.password', 'validPassword');
+        $app['config']->set('kamar-directory-services.username', 'validUsername');
     }
 
     protected function getPackageProviders($app)

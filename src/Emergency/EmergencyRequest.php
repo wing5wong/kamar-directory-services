@@ -41,16 +41,4 @@ class EmergencyRequest extends FormRequest
             'status.in' => 'Must be one of:Alert, Count complete, All Clear',
         ];
     }
-    public function data(): EmergencyData
-    {
-        return new EmergencyData(
-            $this->validated('message'),
-            $this->validated('groupType'),
-            $this->validated('id'),
-            $this->validated('isEmergency'),
-            $this->validated('procedure'),
-            $this->validated('status'),
-            $this->validated('unixTime')
-        );
-    }
 }
