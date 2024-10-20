@@ -2,12 +2,7 @@
 
 namespace Wing5wong\KamarDirectoryServices\Tests\Feature;
 
-use Illuminate\Auth\Access\AuthorizationException;
-use Wing5wong\KamarDirectoryServices\Auth\AuthenticationCheck;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Wing5wong\KamarDirectoryServices\Emergency\EmergencyData;
-use Wing5wong\KamarDirectoryServices\Emergency\EmergencyRequest;
 use Wing5wong\KamarDirectoryServices\Tests\TestCase;
 
 class EmergencyRequestTest extends TestCase
@@ -32,7 +27,7 @@ class EmergencyRequestTest extends TestCase
                 'unixTime' => 123456789,
             ],
             [
-                'HTTP_AUTHORIZATION' => "Basic " . base64_encode(config('kamar-directory-services.username') . ':' . config('kamar-directory-services.password'))
+                'HTTP_AUTHORIZATION' => $this->validCredentials()
             ]
         );
 
@@ -48,7 +43,7 @@ class EmergencyRequestTest extends TestCase
             '/kamar/emergency',
             $fields,
             [
-                'HTTP_AUTHORIZATION' => "Basic " . base64_encode(config('kamar-directory-services.username') . ':' . config('kamar-directory-services.password'))
+                'HTTP_AUTHORIZATION' => $this->validCredentials()
             ]
         );
 
@@ -115,5 +110,10 @@ class EmergencyRequestTest extends TestCase
                 'status' => 'Alert',
             ]],
         ];
+    }
+
+    private function validCredentials()
+    {
+        return "Basic " . base64_encode(config('kamar-directory-services.username') . ':' . config('kamar-directory-services.password'));
     }
 }
