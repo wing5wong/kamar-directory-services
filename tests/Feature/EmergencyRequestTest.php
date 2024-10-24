@@ -9,7 +9,7 @@ class EmergencyRequestTest extends TestCase
 {
     public function test_unauthorised_requests_fail()
     {
-        $response = $this->postJson('/kamar/emergency', []);
+        $response = $this->postJson('/kamar/emergency');
         $response->assertForbidden();
     }
 
@@ -50,7 +50,7 @@ class EmergencyRequestTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function missingFieldsProvider()
+    public static function missingFieldsProvider()
     {
         return [
             [[
