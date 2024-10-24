@@ -4,34 +4,24 @@ namespace Wing5wong\KamarDirectoryServices\Controllers;
 
 use Illuminate\Routing\Controller;
 use Wing5wong\KamarDirectoryServices\KamarData;
-use Wing5wong\KamarDirectoryServices\Auth\AuthenticationCheck;
+use Wing5wong\KamarDirectoryServices\DirectoryService\DirectoryServiceRequest;
 use Wing5wong\KamarDirectoryServices\Responses\Check\Success as CheckSuccess;
 use Wing5wong\KamarDirectoryServices\Responses\Check\XMLSuccess as XMLCheckSuccess;
-use Wing5wong\KamarDirectoryServices\Responses\Standard\{Success, FailedAuthentication, MissingData};
-use Wing5wong\KamarDirectoryServices\Responses\Standard\{XMLSuccess, XMLFailedAuthentication, XMLMissingData};
+use Wing5wong\KamarDirectoryServices\Responses\Standard\{Success, MissingData};
+use Wing5wong\KamarDirectoryServices\Responses\Standard\{XMLSuccess, XMLMissingData};
 
 class HandleKamarPost extends Controller
 {
 
     public function __construct(
-        protected AuthenticationCheck $authCheck,
         protected KamarData $data,
+        protected DirectoryServiceRequest $request
     ) {
         $this->data = KamarData::fromRequest();
     }
 
     public function __invoke()
     {
-        // Check supplied username/password matches our expectation
-        if ($this->authCheck->fails()) {
-            if ($this->data->isJson()) {
-                return response()->json(new FailedAuthentication());
-            }
-            if ($this->data->isXml()) {
-                return response()->xml((string)(new XmlFailedAuthentication()));
-            }
-        }
-
         // Check we have some data
         if ($this->data->isMissing()) {
             if ($this->data->isJson()) {

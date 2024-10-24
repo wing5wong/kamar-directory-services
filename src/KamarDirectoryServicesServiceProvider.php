@@ -23,6 +23,7 @@ class KamarDirectoryServicesServiceProvider extends ServiceProvider
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Mtownsend\RequestXml\Middleware\XmlRequest::class,
         ]);
 
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
@@ -59,7 +60,7 @@ class KamarDirectoryServicesServiceProvider extends ServiceProvider
         // Publishing the configuration file.
         $this->publishes([
             __DIR__ . '/../config/kamar-directory-services.php' => config_path('kamar-directory-services.php'),
-        ], 'kamar-directory-services.config');
+        ], 'kamar-directory-services');
 
         // Registering package commands.
         $this->commands([

@@ -1,11 +1,11 @@
 <?php
 
-namespace Wing5wong\KamarDirectoryServices\Tests\Unit;
+namespace Wing5wong\KamarDirectoryServices\Tests\Feature;
 
 use Illuminate\Http\Request;
 use Spatie\ArrayToXml\ArrayToXml;
 use Wing5wong\KamarDirectoryServices\KamarData;
-use Orchestra\Testbench\TestCase;
+use Wing5wong\KamarDirectoryServices\Tests\TestCase;
 
 class KamarDataTest extends TestCase
 {
@@ -32,7 +32,7 @@ class KamarDataTest extends TestCase
         $this->assertTrue((KamarData::fromRequest())->isMissing());
     }
 
-    public function isSyncTypeDataProvider()
+    public static function isSyncTypeDataProvider()
     {
         return [
             [KamarData::SYNC_TYPE_CHECK,  'isSyncCheck'],
@@ -61,7 +61,7 @@ class KamarDataTest extends TestCase
         $this->assertTrue($kamar->$syncTypeMethod());
     }
 
-    public function incorrectIsSyncTypeDataProvider()
+    public static function incorrectIsSyncTypeDataProvider()
     {
         return [
             [KamarData::SYNC_TYPE_PART,  'isSyncCheck'],
@@ -90,7 +90,7 @@ class KamarDataTest extends TestCase
         $this->assertFalse($kamar->$syncTypeMethod());
     }
 
-    public function syncTypeDataProvider()
+    public static function syncTypeDataProvider()
     {
         return     [
             ['SYNC_TYPE_CHECK', 'check'],
@@ -131,79 +131,79 @@ class KamarDataTest extends TestCase
 
     public function test_it_creates_part_sync_from_file()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/partRequest.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/partRequest.json', false);
         $this->assertTrue($kamar->isSyncPart());
     }
 
     public function test_it_creates_full_sync_from_file()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/fullRequest.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/fullRequest.json', false);
         $this->assertTrue($kamar->isSyncFull());
     }
 
     public function test_it_returns_students_from_a_full_sync()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/fullRequest.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/fullRequest.json', false);
         $this->assertCount(1, $kamar->getStudents());
     }
 
     public function test_it_returns_empty_collection_for_students_from_incorrect_sync_type()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/stafftimetables.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/stafftimetables.json', false);
         $this->assertCount(0, $kamar->getStudents());
     }
 
     public function test_it_returns_staff_from_a_full_sync()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/fullRequest.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/fullRequest.json', false);
         $this->assertCount(1, $kamar->getStaff());
     }
 
     public function test_it_returns_empty_collection_for_staff_from_incorrect_sync_type()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/studenttimetables.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/studenttimetables.json', false);
         $this->assertCount(0, $kamar->getStaff());
     }
 
     public function test_it_returns_stafftimetables_from_a_stafftimetable_sync()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/stafftimetables.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/stafftimetables.json', false);
         $this->assertCount(1, $kamar->getStaffTimetables());
     }
 
     public function test_it_returns_empty_collection_for_stafftimetables_from_incorrect_sync_type()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/studenttimetables.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/studenttimetables.json', false);
         $this->assertCount(0, $kamar->getStaffTimetables());
     }
 
     public function test_it_returns_studenttimetables_from_a_studenttimetable_sync()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/studenttimetables.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/studenttimetables.json', false);
         $this->assertCount(1, $kamar->getStudentTimetables());
     }
 
     public function test_it_returns_empty_collection_for_studenttimetables_from_incorrect_sync_type()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/stafftimetables.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/stafftimetables.json', false);
         $this->assertCount(0, $kamar->getStudentTimetables());
     }
 
     public function test_it_returns_attendances_from_an_attendance_sync()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/attendance.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/attendance.json', false);
         $this->assertCount(1, $kamar->getAttendance());
     }
 
     public function test_it_returns_pastorals_from_a_pastoral_sync()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/pastoral.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/pastoral.json', false);
         $this->assertCount(1, $kamar->getPastoral());
     }
 
     public function test_it_returns_results_from_a_results_sync()
     {
-        $kamar = KamarData::fromFile(__DIR__ . '/Stubs/results.json', false);
+        $kamar = KamarData::fromFile(__DIR__ . '/../Stubs/results.json', false);
         $this->assertCount(1, $kamar->getResults());
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 abstract class AbstractResponse implements Arrayable
 {
     protected string $service;
-    protected float $version;
+    protected string $version;
     protected int $error = 501;
     protected string $result = "Not Implemented";
     protected array $additionalFields = [];

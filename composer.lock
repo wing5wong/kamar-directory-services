@@ -1534,16 +1534,16 @@
         },
         {
             "name": "mtownsend/request-xml",
-            "version": "2.5.0",
+            "version": "2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mtownsend5512/request-xml.git",
-                "reference": "1387d353a5769ca99edc4991edcaf8dba5f7d060"
+                "reference": "5ed7852dc359c995299b0ff05e2cd9a0d0f4de77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mtownsend5512/request-xml/zipball/1387d353a5769ca99edc4991edcaf8dba5f7d060",
-                "reference": "1387d353a5769ca99edc4991edcaf8dba5f7d060",
+                "url": "https://api.github.com/repos/mtownsend5512/request-xml/zipball/5ed7852dc359c995299b0ff05e2cd9a0d0f4de77",
+                "reference": "5ed7852dc359c995299b0ff05e2cd9a0d0f4de77",
                 "shasum": ""
             },
             "require": {
@@ -1590,9 +1590,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mtownsend5512/request-xml/issues",
-                "source": "https://github.com/mtownsend5512/request-xml/tree/2.5.0"
+                "source": "https://github.com/mtownsend5512/request-xml/tree/2.5.1"
             },
-            "time": "2024-04-03T15:18:38+00:00"
+            "time": "2024-10-21T20:13:11+00:00"
         },
         {
             "name": "mtownsend/response-xml",
