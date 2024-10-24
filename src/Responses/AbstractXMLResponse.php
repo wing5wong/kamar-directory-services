@@ -8,7 +8,7 @@ use Spatie\ArrayToXml\ArrayToXml;
 abstract class AbstractXMLResponse implements Stringable
 {
     protected string $service;
-    protected float $version;
+    protected string $version;
     protected int $error = 501;
     protected string $result = "Not Implemented";
     protected array $additionalFields = [];
