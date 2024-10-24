@@ -8,7 +8,7 @@ return [
     'format' => env('KAMAR_DS_FORMAT'),
 
     'serviceName' => 'Kamar Directory Service',
-    'serviceVersion' => 1.0,
+    'serviceVersion' => "1.0.1",
 
     'authSuffix' => env('KAMAR_DS_AUTH_SUFFIX'),
 
