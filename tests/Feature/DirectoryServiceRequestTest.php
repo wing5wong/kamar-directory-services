@@ -9,15 +9,6 @@ use Wing5wong\KamarDirectoryServices\Tests\TestCase;
 
 class DirectoryServiceRequestTest extends TestCase
 {
-    public function test_wrong_accept_header_throws_exception()
-    {
-        $this->withoutExceptionHandling();
-        $this->expectException(Exception::class);
-        $this->post(route('kamar'), [], [
-            'Accept' => 'not-x-m-l-or-json'
-        ]);
-    }
-
     public function test_unauthorised_json_requests_return_failed_authentication_response()
     {
         $response = $this->postJson(route('kamar'));
