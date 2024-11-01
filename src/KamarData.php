@@ -4,6 +4,7 @@ namespace Wing5wong\KamarDirectoryServices;
 
 use Exception;
 use Illuminate\Support\Facades\Storage;
+use Wing5wong\KamarDirectoryServices\DirectoryService\DirectoryServiceRequest;
 
 class KamarData
 {
@@ -59,12 +60,6 @@ class KamarData
         return $this->isSyncType(self::SYNC_TYPE_FULL);
     }
 
-    public function store()
-    {
-        $filename = $this->getSyncType() . "_" . time() . "_" . mt_rand(1000, 9999) . "." . $this->format;
-        Storage::put('data/' . $filename, request()->getContent());
-    }
-
     public function isJson()
     {
         return $this->format === 'json';
@@ -75,14 +70,14 @@ class KamarData
         return $this->format === 'xml';
     }
 
-    public static function fromRequest()
+    public static function fromRequest(DirectoryServiceRequest $request)
     {
         $kamarData = new static;
 
-        if (request()->isJson()) {
-            $kamarData->setData(collect(request()->input()), 'json');
-        } elseif (request()->isXml()) {
-            $kamarData->setData(collect(request()->xml()), 'xml');
+        if ($request->isJson()) {
+            $kamarData->setData(collect($request->input()), 'json');
+        } elseif ($request->isXml()) {
+            $kamarData->setData(collect($request->xml()), 'xml');
         } else {
             throw new Exception("Invalid content");
         }
@@ -93,8 +88,18 @@ class KamarData
     public static function fromFile($filename, $useBasePath = true)
     {
         $kamarData = new static;
+
         if ($useBasePath) {
-            $kamarData->setData(collect(json_decode(Storage::disk('local')->get('data/' . $filename), true)), 'json');
+            $kamarData->setData(
+                collect(json_decode(
+                    Storage::disk(config('kamar-directory-services.storageDisk'))
+                        ->get(
+                            config('kamar-directory-services.storageFolder') . DIRECTORY_SEPARATOR . $filename
+                        ),
+                    true
+                )),
+                'json'
+            );
         } else {
             $kamarData->setData(collect(json_decode(file_get_contents($filename), true)), 'json');
         }
