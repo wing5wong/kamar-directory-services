@@ -13,7 +13,6 @@ use Wing5wong\KamarDirectoryServices\Responses\Standard\{XMLSuccess, XMLMissingD
 
 class HandleKamarPost extends Controller
 {
-
     public function __construct(
         protected KamarData $data,
         protected DirectoryServiceRequest $request
@@ -24,27 +23,35 @@ class HandleKamarPost extends Controller
     public function __invoke()
     {
         if ($this->data->isMissing()) {
-            if ($this->data->isJson()) {
-                return response()->json(new MissingData());
-            }
-            if ($this->data->isXml()) {
-                return response()->xml((string)(new XmlMissingData()));
-            }
+            return $this->handleMissingDataResponse();
+        } elseif ($this->data->isSyncCheck()) {
+            return $this->handleSyncCheckResponse();
+        } else {
+            return $this->handleOKResponse();
         }
+    }
 
-        if ($this->data->isSyncCheck()) {
-            if ($this->data->isJson()) {
-                return response()->json(new CheckSuccess(
-                    data_get($this->data, 'SMSDirectoryData.datetime'),
-                    data_get($this->data, 'SMSDirectoryData.version')
-                ));
-            }
-            if ($this->data->isXml()) {
-                return response()->xml((string)(new XmlCheckSuccess()));
-            }
+    private function handleMissingDataResponse()
+    {
+        if ($this->data->isJson()) {
+            return response()->json(new MissingData());
         }
+        if ($this->data->isXml()) {
+            return response()->xml((string)(new XmlMissingData()));
+        }
+    }
 
-        return $this->handleOKResponse();
+    private function handleSyncCheckResponse()
+    {
+        if ($this->data->isJson()) {
+            return response()->json(new CheckSuccess(
+                data_get($this->data, 'SMSDirectoryData.datetime'),
+                data_get($this->data, 'SMSDirectoryData.version')
+            ));
+        }
+        if ($this->data->isXml()) {
+            return response()->xml((string)(new XmlCheckSuccess()));
+        }
     }
 
     private function handleOKResponse()
