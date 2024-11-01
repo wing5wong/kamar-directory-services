@@ -2,7 +2,6 @@
 
 namespace Wing5wong\KamarDirectoryServices\DirectoryService;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Wing5wong\KamarDirectoryServices\Auth\AuthenticationCheck;
@@ -24,8 +23,11 @@ class DirectoryServiceRequest extends FormRequest
         if ($this->wantsJson()) {
             throw new HttpResponseException(response()->json((new FailedAuthentication())->toArray()));
         }
-        throw new HttpResponseException(response()->xml((string) (new XMLFailedAuthentication())));
+        if ($this->wantsXml()) {
+            throw new HttpResponseException(response()->xml((string) (new XMLFailedAuthentication())));
+        }
     }
+
 
     public function rules(): array
     {
