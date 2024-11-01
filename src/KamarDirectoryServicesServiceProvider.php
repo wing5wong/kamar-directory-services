@@ -24,6 +24,7 @@ class KamarDirectoryServicesServiceProvider extends ServiceProvider
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Mtownsend\RequestXml\Middleware\XmlRequest::class,
+            \Wing5wong\KamarDirectoryServices\Middleware\JsonOrXml::class,
         ]);
 
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
