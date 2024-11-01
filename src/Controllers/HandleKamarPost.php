@@ -3,6 +3,7 @@
 namespace Wing5wong\KamarDirectoryServices\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 use Wing5wong\KamarDirectoryServices\KamarData;
 use Wing5wong\KamarDirectoryServices\DirectoryService\DirectoryServiceRequest;
 use Wing5wong\KamarDirectoryServices\Responses\Check\Success as CheckSuccess;
@@ -17,12 +18,11 @@ class HandleKamarPost extends Controller
         protected KamarData $data,
         protected DirectoryServiceRequest $request
     ) {
-        $this->data = KamarData::fromRequest();
+        $this->data = KamarData::fromRequest($request);
     }
 
     public function __invoke()
     {
-        // Check we have some data
         if ($this->data->isMissing()) {
             if ($this->data->isJson()) {
                 return response()->json(new MissingData());
@@ -32,29 +32,40 @@ class HandleKamarPost extends Controller
             }
         }
 
-        // Check if a 'check' sync, return check response.
         if ($this->data->isSyncCheck()) {
             if ($this->data->isJson()) {
-                return response()->json(new CheckSuccess(data_get($this->data, 'SMSDirectoryData.datetime'), data_get($this->data, 'SMSDirectoryData.version')));
+                return response()->json(new CheckSuccess(
+                    data_get($this->data, 'SMSDirectoryData.datetime'),
+                    data_get($this->data, 'SMSDirectoryData.version')
+                ));
             }
             if ($this->data->isXml()) {
-                return response()->xml((string)(new XmlCheckSuccess($dateTime  = null, $buildNumber  = null)));
+                return response()->xml((string)(new XmlCheckSuccess()));
             }
         }
 
-        // All other messages - store the data and return 'OK' response.
         return $this->handleOKResponse();
     }
 
     private function handleOKResponse()
     {
-        // Do something
-        $this->data->store();
+        $this->storeKamarData();
+
         if ($this->data->isJson()) {
             return response()->json(new Success());
         }
         if ($this->data->isXml()) {
             return response()->xml((string)(new XmlSuccess()));
         }
+    }
+
+    private function storeKamarData()
+    {
+        $filename = $this->data->getSyncType() . "_" . time() . "_" . mt_rand(1000, 9999) . "." . $this->data->format;
+        Storage::disk(config('kamar-directory-services.storageDisk'))
+            ->put(
+                config('kamar-directory-services.storageFolder') . DIRECTORY_SEPARATOR . $filename,
+                $this->request->getContent()
+            );
     }
 }
