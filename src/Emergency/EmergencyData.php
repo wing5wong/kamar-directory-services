@@ -19,13 +19,13 @@ class EmergencyData
     public static function fromRequest(Request $request): EmergencyData
     {
         return new static(
-                $request->validated('message'),
-                $request->validated('groupType'),
-                $request->validated('id'),
-                $request->validated('isEmergency'),
-                $request->validated('procedure'),
-                $request->validated('status'),
-                $request->validated('unixTime')
+            $request->validated('message'),
+            $request->validated('groupType'),
+            $request->validated('id'),
+            $request->validated('isEmergency'),
+            $request->validated('procedure'),
+            $request->validated('status'),
+            $request->validated('unixTime')
         );
     }
 }
