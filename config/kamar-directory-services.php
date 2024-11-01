@@ -5,6 +5,9 @@ return [
     'username' =>  env('KAMAR_DS_USERNAME'),
     'password' => env('KAMAR_DS_PASSWORD'),
 
+    'storageDisk' => env('KAMAR_DS_STORAGE_DISK', 'local'),
+    'storageFolder' => env('KAMAR_DS_STORAGE_FOLDER', 'data'),
+
     'format' => env('KAMAR_DS_FORMAT'),
 
     'serviceName' => 'Kamar Directory Service',
