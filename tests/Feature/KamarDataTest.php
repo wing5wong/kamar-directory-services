@@ -2,8 +2,8 @@
 
 namespace Wing5wong\KamarDirectoryServices\Tests\Feature;
 
-use Illuminate\Http\Request;
 use Spatie\ArrayToXml\ArrayToXml;
+use Wing5wong\KamarDirectoryServices\DirectoryService\DirectoryServiceRequest;
 use Wing5wong\KamarDirectoryServices\KamarData;
 use Wing5wong\KamarDirectoryServices\Tests\TestCase;
 
@@ -16,20 +16,17 @@ class KamarDataTest extends TestCase
 
     public function test_isMissing_returns_true_when_request_is_blank()
     {
-        $this->setupBlankRequest();
-        $this->assertTrue(KamarData::fromRequest()->isMissing());
+        $this->assertTrue(KamarData::fromRequest($this->blankRequest())->isMissing());
     }
 
     public function test_isMissing_returns_true_when_XMLrequest_is_blank()
     {
-        $this->setupBlankXMLRequest();
-        $this->assertTrue(KamarData::fromRequest()->isMissing());
+        $this->assertTrue(KamarData::fromRequest($this->blankXMLRequest())->isMissing());
     }
 
     public function test_isMissing_returns_true_when_request_SMSDirectoryData_is_empty_array()
     {
-        $this->setupEmptyRequest();
-        $this->assertTrue((KamarData::fromRequest())->isMissing());
+        $this->assertTrue((KamarData::fromRequest($this->emptyRequest()))->isMissing());
     }
 
     public static function isSyncTypeDataProvider()
@@ -46,8 +43,7 @@ class KamarDataTest extends TestCase
      */
     public function test_is_sync_type_returns_true_for_correct_method($syncType, $syncTypeMethod)
     {
-        $this->setupGenericSyncRequest($syncType);
-        $kamar = KamarData::fromRequest();
+        $kamar = KamarData::fromRequest($this->genericSyncRequest($syncType));
         $this->assertTrue($kamar->$syncTypeMethod());
     }
 
@@ -56,8 +52,7 @@ class KamarDataTest extends TestCase
      */
     public function test_is_sync_type_returns_true_for_correct_method_xml_request($syncType, $syncTypeMethod)
     {
-        $this->setupGenericXMLSyncRequest($syncType);
-        $kamar = KamarData::fromRequest();
+        $kamar = KamarData::fromRequest($this->genericXMLSyncRequest($syncType));
         $this->assertTrue($kamar->$syncTypeMethod());
     }
 
@@ -75,8 +70,7 @@ class KamarDataTest extends TestCase
      */
     public function test_is_sync_type_returns_false_for_incorrect_method($syncType, $syncTypeMethod)
     {
-        $this->setupGenericSyncRequest($syncType);
-        $kamar = KamarData::fromRequest();
+        $kamar = KamarData::fromRequest($this->genericSyncRequest($syncType));
         $this->assertFalse($kamar->$syncTypeMethod());
     }
 
@@ -85,8 +79,7 @@ class KamarDataTest extends TestCase
      */
     public function test_is_sync_type_returns_false_for_incorrect_method_xml_request($syncType, $syncTypeMethod)
     {
-        $this->setupGenericXMLSyncRequest($syncType);
-        $kamar = KamarData::fromRequest();
+        $kamar = KamarData::fromRequest($this->genericXMLSyncRequest($syncType));
         $this->assertFalse($kamar->$syncTypeMethod());
     }
 
@@ -114,9 +107,11 @@ class KamarDataTest extends TestCase
      */
     public function test_itGetsTheCorrectSyncType($syncConst, $syncType)
     {
-        $this->setupGenericSyncRequest($syncType);
-        $kamar = KamarData::fromRequest();
-        $this->assertSame(constant("Wing5wong\KamarDirectoryServices\KamarData::$syncConst"), $kamar->getSyncType());
+        $kamar = KamarData::fromRequest($this->genericSyncRequest($syncType));
+        $this->assertSame(
+            constant("Wing5wong\KamarDirectoryServices\KamarData::$syncConst"),
+            $kamar->getSyncType()
+        );
     }
 
     /**
@@ -124,9 +119,11 @@ class KamarDataTest extends TestCase
      */
     public function test_itGetsTheCorrectXMLSyncType($syncConst, $syncType)
     {
-        $this->setupGenericXMLSyncRequest($syncType);
-        $kamar = KamarData::fromRequest();
-        $this->assertSame(constant("Wing5wong\KamarDirectoryServices\KamarData::$syncConst"), $kamar->getSyncType());
+        $kamar = KamarData::fromRequest($this->genericXMLSyncRequest($syncType));
+        $this->assertSame(
+            constant("Wing5wong\KamarDirectoryServices\KamarData::$syncConst"),
+            $kamar->getSyncType()
+        );
     }
 
     public function test_it_creates_part_sync_from_file()
@@ -207,40 +204,40 @@ class KamarDataTest extends TestCase
         $this->assertCount(1, $kamar->getResults());
     }
 
-    private function setupEmptyRequest()
+    private function emptyRequest()
     {
-        $request = new Request();
+        $request = new DirectoryServiceRequest();
         $request->headers->set('content-type', 'application/json');
         $request->merge(['SMSDirectoryData' => []]);
-        app()->instance('request', $request);
+        return $request;
     }
 
-    private function setupBlankRequest()
+    private function blankRequest()
     {
-        $request = new Request();
+        $request = new DirectoryServiceRequest();
         $request->headers->set('content-type', 'application/json');
-        app()->instance('request', $request);
+        return $request;
     }
 
-    private function setupBlankXMLRequest()
+    private function blankXMLRequest()
     {
-        $request = new Request();
+        $request = new DirectoryServiceRequest();
         $request->headers->set('content-type', 'application/xml');
-        app()->instance('request', $request);
+        return $request;
     }
 
-    private function setupGenericXMLSyncRequest($syncType)
+    private function genericXMLSyncRequest($syncType)
     {
-        $request = Request::create('/', 'POST', [], [], [], [], ArrayToXml::convert(['@attributes' => ['sync' => $syncType]], 'SMSDirectoryData'));
+        $request = DirectoryServiceRequest::create('/', 'POST', [], [], [], [], ArrayToXml::convert(['@attributes' => ['sync' => $syncType]], 'SMSDirectoryData'));
         $request->headers->set('content-type', 'application/xml');
-        app()->instance('request', $request);
+        return $request;
     }
 
-    private function setupGenericSyncRequest($syncType)
+    private function genericSyncRequest($syncType)
     {
-        $request = new Request();
+        $request = new DirectoryServiceRequest();
         $request->headers->set('content-type', 'application/json');
         $request->merge(['SMSDirectoryData' => ['sync' => $syncType]]);
-        app()->instance('request', $request);
+        return $request;
     }
 }
