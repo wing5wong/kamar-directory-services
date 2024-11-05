@@ -17,8 +17,13 @@ class AuthenticationCheck
         $this->password = config('kamar-directory-services.password');
     }
 
-    public function fails()
+    public function fails(): bool
     {
-        return $this->request->server('HTTP_AUTHORIZATION') !== ("Basic " . base64_encode($this->username . ':' . $this->password));
+        return $this->request->server('HTTP_AUTHORIZATION') !== $this->basicAuthString();
+    }
+
+    private function basicAuthString(): string
+    {
+        return "Basic " . base64_encode($this->username . ':' . $this->password);
     }
 }
