@@ -8,6 +8,8 @@ use Illuminate\Routing\Router;
 use Wing5wong\KamarDirectoryServices\Commands\RemoveOldDataFiles;
 use Wing5wong\KamarDirectoryServices\Emergency\EmergencyServiceInterface;
 use Wing5wong\KamarDirectoryServices\Emergency\LogEmergencyService;
+use Wing5wong\KamarDirectoryServices\Encryption\KamarEncrypter;
+use Wing5wong\KamarDirectoryServices\Encryption\KamarEncryptionInterface;
 
 class KamarDirectoryServicesServiceProvider extends ServiceProvider
 {
@@ -49,6 +51,7 @@ class KamarDirectoryServicesServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/kamar-directory-services.php', 'kamar-directory-services');
 
         $this->app->bind(EmergencyServiceInterface::class, LogEmergencyService::class);
+        $this->app->bind(KamarEncryptionInterface::class, KamarEncrypter::class);
     }
 
     /**
