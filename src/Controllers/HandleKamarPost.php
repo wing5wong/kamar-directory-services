@@ -45,8 +45,8 @@ class HandleKamarPost extends Controller
     {
         if ($this->data->isJson()) {
             return response()->json(new CheckSuccess(
-                data_get($this->data, 'SMSDirectoryData.datetime'),
-                data_get($this->data, 'SMSDirectoryData.version')
+                data_get($this->data->data, 'SMSDirectoryData.datetime'),
+                data_get($this->data->data, 'SMSDirectoryData.version')
             ));
         }
         if ($this->data->isXml()) {
