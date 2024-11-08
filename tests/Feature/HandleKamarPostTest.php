@@ -68,14 +68,23 @@ class HandleKamarPostTest extends TestCase
 
     public function test_authenticated_check_requests_return_success()
     {
+        $version = "2198";
+        $datetime = "20221122111106";
+
         $response = $this->withHeaders([
             'HTTP_AUTHORIZATION' => $this->validCredentials(),
         ])->postJson(
             route('kamar'),
-            ['SMSDirectoryData' => ['sync' => 'check']]
+            [
+                'SMSDirectoryData' => [
+                    'sync' => 'check',
+                    "version" => $version,
+                    "datetime" => $datetime
+                ]
+            ]
         );
 
-        $response->assertJson((new CheckSuccess())->toArray());
+        $response->assertJson((new CheckSuccess($datetime, $version))->toArray());
     }
 
     public function test_authenticated_standard_requests_return_success()

@@ -45,8 +45,8 @@ class HandleKamarPost extends Controller
     {
         if ($this->data->isJson()) {
             return response()->json(new CheckSuccess(
-                data_get($this->data->data, 'SMSDirectoryData.datetime'),
-                data_get($this->data->data, 'SMSDirectoryData.version')
+                $this->data->getDateTime(),
+                $this->data->getVersion(),
             ));
         }
         if ($this->data->isXml()) {
@@ -68,7 +68,7 @@ class HandleKamarPost extends Controller
 
     private function storeKamarData()
     {
-        $filename = $this->data->getSyncType() . "_" . date('Y-m-d_His') . "_" . mt_rand(1000, 9999) . "." . $this->data->format;
+        $filename = $this->data->generateFilename();
         Storage::disk(config('kamar-directory-services.storageDisk'))
             ->put(
                 config('kamar-directory-services.storageFolder') . DIRECTORY_SEPARATOR . $filename,

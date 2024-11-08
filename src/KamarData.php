@@ -106,6 +106,21 @@ class KamarData
         return $kamarData;
     }
 
+    public function getVersion()
+    {
+        return data_get($this->data, 'SMSDirectoryData.version');
+    }
+
+    public function getDateTime()
+    {
+        return data_get($this->data, 'SMSDirectoryData.datetime');
+    }
+
+    public function generateFilename()
+    {
+        return $this->getSyncType() . "_" . date('Y-m-d_His') . "_" . mt_rand(1000, 9999) . "." . $this->format;
+    }
+
     public function getStaff()
     {
         return collect(data_get($this->data, 'SMSDirectoryData.staff.data'));

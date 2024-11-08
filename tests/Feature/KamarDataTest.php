@@ -47,6 +47,30 @@ class KamarDataTest extends TestCase
         $this->assertTrue($kamar->$syncTypeMethod());
     }
 
+
+    public function test_can_get_verson_and_datetime_from_check_request()
+    {
+        $version = "2198";
+        $datetime = "20221122111106";
+
+        $request = new DirectoryServiceRequest();
+        $request->headers->set('content-type', 'application/json');
+        $request->merge(
+            [
+                'SMSDirectoryData' => [
+                    'sync' => KamarData::SYNC_TYPE_CHECK,
+                    "version" => $version,
+                    "datetime" => $datetime
+                ]
+            ]
+        );
+
+        $kamar = KamarData::fromRequest($request);
+
+        $this->assertSame($version, $kamar->getVersion());
+        $this->assertSame($datetime, $kamar->getDateTime());
+    }
+
     /**
      * @dataProvider isSyncTypeDataProvider()
      */
@@ -237,7 +261,13 @@ class KamarDataTest extends TestCase
     {
         $request = new DirectoryServiceRequest();
         $request->headers->set('content-type', 'application/json');
-        $request->merge(['SMSDirectoryData' => ['sync' => $syncType]]);
+        $request->merge(
+            [
+                'SMSDirectoryData' => [
+                    'sync' => $syncType,
+                ]
+            ]
+        );
         return $request;
     }
 }
