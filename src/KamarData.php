@@ -8,6 +8,8 @@ use Wing5wong\KamarDirectoryServices\DirectoryService\DirectoryServiceRequest;
 
 class KamarData
 {
+    const DATA_FORMAT_JSON = 'json';
+    const DATA_FORMAT_XML = 'xml';
     const SYNC_TYPE_CHECK = 'check';
     const SYNC_TYPE_PART = 'part';
     const SYNC_TYPE_FULL = 'full';
@@ -24,18 +26,18 @@ class KamarData
 
     public $data;
     public $syncType;
-    public $format = 'json';
+    public $format = self::DATA_FORMAT_JSON;
 
     public function isMissing()
     {
-        return $this->format == 'json'
+        return $this->format == self::DATA_FORMAT_JSON
             ? empty(data_get($this->data, 'SMSDirectoryData'))
             : $this->data->isEmpty();
     }
 
     public function getSyncType()
     {
-        return $this->format == 'json'
+        return $this->format == self::DATA_FORMAT_JSON
             ? data_get($this->data,  'SMSDirectoryData.sync')
             : data_get($this->data,  '@attributes.sync');
     }
@@ -62,12 +64,12 @@ class KamarData
 
     public function isJson()
     {
-        return $this->format === 'json';
+        return $this->format === self::DATA_FORMAT_JSON;
     }
 
     public function isXml()
     {
-        return $this->format === 'xml';
+        return $this->format === self::DATA_FORMAT_XML;
     }
 
     public static function fromRequest(DirectoryServiceRequest $request)
@@ -75,9 +77,9 @@ class KamarData
         $kamarData = new static;
 
         if ($request->isJson()) {
-            $kamarData->setData(collect($request->input()), 'json');
+            $kamarData->setData(collect($request->input()), self::DATA_FORMAT_JSON);
         } elseif ($request->isXml()) {
-            $kamarData->setData(collect($request->xml()), 'xml');
+            $kamarData->setData(collect($request->xml()), self::DATA_FORMAT_XML);
         } else {
             throw new Exception("Invalid content");
         }
@@ -98,10 +100,10 @@ class KamarData
                         ),
                     true
                 )),
-                'json'
+                self::DATA_FORMAT_JSON
             );
         } else {
-            $kamarData->setData(collect(json_decode(file_get_contents($filename), true)), 'json');
+            $kamarData->setData(collect(json_decode(file_get_contents($filename), true)), self::DATA_FORMAT_JSON);
         }
         return $kamarData;
     }
