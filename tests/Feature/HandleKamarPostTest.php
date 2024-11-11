@@ -2,7 +2,9 @@
 
 namespace Wing5wong\KamarDirectoryServices\Tests\Feature;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+use Wing5wong\KamarDirectoryServices\Events\KamarPostStored;
 use Wing5wong\KamarDirectoryServices\KamarData;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\Success;
 use Wing5wong\KamarDirectoryServices\Responses\Check\Success as CheckSuccess;
@@ -89,6 +91,8 @@ class HandleKamarPostTest extends TestCase
 
     public function test_authenticated_standard_requests_return_success()
     {
+        Event::fake();
+
         $response = $this->withHeaders([
             'HTTP_AUTHORIZATION' => $this->validCredentials(),
         ])->postJson(
@@ -97,6 +101,7 @@ class HandleKamarPostTest extends TestCase
         );
 
         $response->assertJson((new Success())->toArray());
+        Event::assertDispatched(KamarPostStored::class);
     }
 
 

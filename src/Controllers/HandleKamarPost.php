@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Wing5wong\KamarDirectoryServices\KamarData;
 use Wing5wong\KamarDirectoryServices\DirectoryService\DirectoryServiceRequest;
+use Wing5wong\KamarDirectoryServices\Events\KamarPostStored;
 use Wing5wong\KamarDirectoryServices\Responses\Check\Success as CheckSuccess;
 use Wing5wong\KamarDirectoryServices\Responses\Check\XMLSuccess as XMLCheckSuccess;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\{Success, MissingData};
@@ -74,5 +75,6 @@ class HandleKamarPost extends Controller
                 config('kamar-directory-services.storageFolder') . DIRECTORY_SEPARATOR . $filename,
                 $this->request->getContent()
             );
+        event(new KamarPostStored($filename));
     }
 }

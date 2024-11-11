@@ -3,6 +3,7 @@
 namespace Wing5wong\KamarDirectoryServices\Tests\Feature;
 
 use Illuminate\Http\Response;
+use Wing5wong\KamarDirectoryServices\Emergency\EmergencyServiceInterface;
 use Wing5wong\KamarDirectoryServices\Tests\TestCase;
 
 class EmergencyRequestTest extends TestCase
@@ -115,5 +116,30 @@ class EmergencyRequestTest extends TestCase
     private function validCredentials()
     {
         return "Basic " . base64_encode(config('kamar-directory-services.username') . ':' . config('kamar-directory-services.password'));
+    }
+
+    public function test_emergency_service_notify_called()
+    {
+        $this->mock(EmergencyServiceInterface::class, function ($mock) {
+            $mock->shouldReceive('notify')->once();
+        });
+
+        $response = $this->postJson(
+            '/kamar/emergency',
+            [
+                'message' => 'required',
+                'groupType' => 'tutor group',
+                'id' => 'required',
+                'isEmergency' => true,
+                'procedure' => 'Lockdown',
+                'status' => 'Alert',
+                'unixTime' => 123456789,
+            ],
+            [
+                'HTTP_AUTHORIZATION' => $this->validCredentials()
+            ]
+        );
+
+        $response->assertOk();
     }
 }
