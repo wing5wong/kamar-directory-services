@@ -27,6 +27,7 @@ abstract class AbstractResponse implements Arrayable
                 [
                     'service' => $this->service,
                     'version' => $this->version,
+                    'countryDataStored' => $this->countryDataStored,
                     'error' => $this->error,
                     'result' => $this->result,
                 ],
