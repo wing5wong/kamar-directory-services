@@ -14,6 +14,7 @@ return [
 
     'serviceName' => 'Kamar Directory Service',
     'serviceVersion' => "1.0.1",
+    'countryDataStored' => 'New Zealand',
 
     'authSuffix' => env('KAMAR_DS_AUTH_SUFFIX'),
 

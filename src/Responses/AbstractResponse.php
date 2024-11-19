@@ -8,6 +8,7 @@ abstract class AbstractResponse implements Arrayable
 {
     protected string $service;
     protected string $version;
+    protected string $countryDataStored;
     protected int $error = 501;
     protected string $result = "Not Implemented";
     protected array $additionalFields = [];
@@ -16,6 +17,7 @@ abstract class AbstractResponse implements Arrayable
     {
         $this->service = config('kamar-directory-services.serviceName');
         $this->version = config('kamar-directory-services.serviceVersion');
+        $this->countryDataStored = config('kamar-directory-services.countryDataStored');
     }
 
     public function toArray()
