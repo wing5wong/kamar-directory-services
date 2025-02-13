@@ -149,22 +149,22 @@ class KamarData
 
     public function getAttendance()
     {
-        return data_get($this->data, 'SMSDirectoryData.attendance.data');
+        return collect(data_get($this->data, 'SMSDirectoryData.attendance.data'));
     }
 
     public function getPastoral()
     {
-        return data_get($this->data, 'SMSDirectoryData.pastoral.data');
+        return collect(data_get($this->data, 'SMSDirectoryData.pastoral.data'));
     }
 
     public function getNotices()
     {
-        return data_get($this->data, 'SMSDirectoryData.notices.data');
+        return collect(data_get($this->data, 'SMSDirectoryData.notices.data'));
     }
 
     public function getResults()
     {
-        return data_get($this->data, 'SMSDirectoryData.results.data');
+        return collect(data_get($this->data, 'SMSDirectoryData.results.data'));
     }
 
     private function setData($data, $format)
