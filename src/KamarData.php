@@ -44,7 +44,7 @@ class KamarData
 
     public function isSyncType($syncType)
     {
-        return $this->getSyncType() === $syncType;
+        return $this->syncType === $syncType;
     }
 
     public function isSyncCheck()
@@ -120,7 +120,7 @@ class KamarData
 
     public function generateFilename()
     {
-        return $this->getSyncType() . "_" . date('Y-m-d_His') . "_" . mt_rand(1000, 9999) . "." . $this->format;
+        return $this->syncType . "_" . date('Y-m-d_His') . "_" . mt_rand(1000, 9999) . "." . $this->format;
     }
 
     public function getStaff()
@@ -155,6 +155,11 @@ class KamarData
     public function getPastoral()
     {
         return data_get($this->data, 'SMSDirectoryData.pastoral.data');
+    }
+
+    public function getNotices()
+    {
+        return data_get($this->data, 'SMSDirectoryData.notices.data');
     }
 
     public function getResults()
