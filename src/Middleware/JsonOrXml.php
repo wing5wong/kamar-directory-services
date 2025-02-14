@@ -9,8 +9,8 @@ class JsonOrXml
 {
     public function handle($request, Closure $next)
     {
-        if (! ($request->wantsJson() || $request->wantsXml())) {
-            throw new Exception("Invalid Accept header");
+        if (! ($request->isJson() || $request->isXml())) {
+            throw new Exception("Invalid Content-Type header");
         }
 
         return $next($request);

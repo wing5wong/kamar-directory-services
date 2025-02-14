@@ -20,7 +20,7 @@ class EmergencyRequestTest extends TestCase
             '/kamar/emergency',
             [
                 'message' => 'required',
-                'groupType' => 'tutor group',
+                'groupType' => 'Tutor group',
                 'id' => 'required',
                 'isEmergency' => true,
                 'procedure' => 'Lockdown',
@@ -55,7 +55,7 @@ class EmergencyRequestTest extends TestCase
     {
         return [
             [[
-                'groupType' => 'tutor group',
+                'groupType' => 'Tutor group',
                 'id' => 'required',
                 'isEmergency' => true,
                 'procedure' => 'Lockdown',
@@ -72,7 +72,7 @@ class EmergencyRequestTest extends TestCase
             ]],
             [[
                 'message' => 'Emergency',
-                'groupType' => 'tutor group',
+                'groupType' => 'Tutor group',
                 'isEmergency' => true,
                 'procedure' => 'Lockdown',
                 'status' => 'Alert',
@@ -80,7 +80,7 @@ class EmergencyRequestTest extends TestCase
             ]],
             [[
                 'message' => 'Emergency',
-                'groupType' => 'tutor group',
+                'groupType' => 'Tutor group',
                 'id' => 'required',
                 'procedure' => 'Lockdown',
                 'status' => 'Alert',
@@ -88,7 +88,7 @@ class EmergencyRequestTest extends TestCase
             ]],
             [[
                 'message' => 'Emergency',
-                'groupType' => 'tutor group',
+                'groupType' => 'Tutor group',
                 'id' => 'required',
                 'isEmergency' => true,
                 'status' => 'Alert',
@@ -96,7 +96,7 @@ class EmergencyRequestTest extends TestCase
             ]],
             [[
                 'message' => 'Emergency',
-                'groupType' => 'tutor group',
+                'groupType' => 'Tutor group',
                 'id' => 'required',
                 'isEmergency' => true,
                 'procedure' => 'Lockdown',
@@ -104,7 +104,7 @@ class EmergencyRequestTest extends TestCase
             ]],
             [[
                 'message' => 'Emergency',
-                'groupType' => 'tutor group',
+                'groupType' => 'Tutor group',
                 'id' => 'required',
                 'isEmergency' => true,
                 'procedure' => 'Lockdown',
@@ -128,7 +128,7 @@ class EmergencyRequestTest extends TestCase
             '/kamar/emergency',
             [
                 'message' => 'required',
-                'groupType' => 'tutor group',
+                'groupType' => 'Tutor group',
                 'id' => 'required',
                 'isEmergency' => true,
                 'procedure' => 'Lockdown',
