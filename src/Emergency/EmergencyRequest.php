@@ -24,11 +24,11 @@ class EmergencyRequest extends FormRequest
     {
         return [
             'message' => 'required',
-            'groupType' => 'required|in:tutor group,current class',
+            'groupType' => 'required|in:Tutor group,Current class',
             'id' => 'required',
             'isEmergency' => 'required|boolean',
             'procedure' => 'required|in:Evacuate,Lockdown',
-            'status' => 'required|in:Alert,Count complete,All Clear',
+            'status' => 'required|in:Alert,Count complete,All clear,Event over',
             'unixTime' => 'required|numeric',
         ];
     }

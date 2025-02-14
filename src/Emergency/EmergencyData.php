@@ -2,8 +2,6 @@
 
 namespace Wing5wong\KamarDirectoryServices\Emergency;
 
-use Illuminate\Http\Request;
-
 class EmergencyData
 {
     public function __construct(
@@ -16,7 +14,7 @@ class EmergencyData
         public int $unixTime,
     ) {}
 
-    public static function fromRequest(Request $request): EmergencyData
+    public static function fromRequest(EmergencyRequest $request): EmergencyData
     {
         return new static(
             $request->validated('message'),
