@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('role')->default('Student'); // Always set to 'Student'.
             $table->integer('schoolindex')->unsigned(); // School index number (1-5).
             $table->string('nsn')->nullable(); // National Student Number (NSI / NSN).
-            $table->timestamps(); // Created timestamp (auto-managed by Laravel).
             $table->string('uniqueid')->nullable(); // School-editable unique ID number.
             $table->boolean('accountdisabled')->default(false); // Account disabled flag (0 or 1).
             $table->boolean('signedagreement')->default(false); // Flag for signed internet agreement.
