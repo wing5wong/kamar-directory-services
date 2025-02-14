@@ -31,6 +31,10 @@ class KamarDirectoryServicesServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
 
+        $this->publishes([
+            __DIR__ . '/../database/migrations/' => database_path('migrations/kamar-directory-services'),
+        ], 'kamar-directory-services');
+
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
