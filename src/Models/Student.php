@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $fillable = [
-        'id',
         'student_id',
         'uuid',
         'role',
@@ -55,7 +54,7 @@ class Student extends Model
         'networkaccess',
         'althomedrive',
         'altdescription',
-        'residence',
+        'residences',
         'caregivers',
         'groups',
         'awards',
@@ -70,6 +69,7 @@ class Student extends Model
         'timetabletop' => 'array',
         'timetablebottom' => 'array',
         'leavingschools' => 'array',
+        'residences' => 'array',
         'caregivers' => 'array',
         'groups' => 'array',
         'awards' => 'array',

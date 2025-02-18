@@ -7,10 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pastoral extends Model
 {
     // Table name (Laravel uses the plural form by default, so 'pastoral_records' is fine).
-    protected $table = 'pastoral_records';
-
-    // Define the primary key (Laravel will use 'id' by default).
-    protected $primaryKey = 'id';
+    protected $table = 'pastorals';
 
     // Define fillable attributes (mass assignable attributes).
     protected $fillable = [

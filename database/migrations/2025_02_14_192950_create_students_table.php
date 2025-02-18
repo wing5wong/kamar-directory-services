@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('role')->default('Student'); // Always set to 'Student'.
             $table->integer('schoolindex')->unsigned(); // School index number (1-5).
             $table->string('nsn')->nullable(); // National Student Number (NSI / NSN).
+            $table->datetime('created')->nullable();
             $table->string('uniqueid')->nullable(); // School-editable unique ID number.
             $table->boolean('accountdisabled')->default(false); // Account disabled flag (0 or 1).
             $table->boolean('signedagreement')->default(false); // Flag for signed internet agreement.
@@ -59,7 +60,7 @@ return new class extends Migration
             $table->boolean('networkaccess')->default(1); // Internet access allowed (0 or 1).
             $table->string('althomedrive')->nullable(); // Alternate network home drive location.
             $table->string('altdescription')->nullable(); // Alternate network user description.
-            $table->text('residence')->nullable(); // Information about the student's residence.
+            $table->json('residences')->nullable(); // Information about the student's residence.
             $table->json('caregivers')->nullable(); // List of caregivers associated with the student.
             $table->json('groups')->nullable(); // List of teams/groups and timetable classes.
             $table->json('awards')->nullable(); // List of student awards.
