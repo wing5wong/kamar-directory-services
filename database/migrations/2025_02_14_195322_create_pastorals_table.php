@@ -28,8 +28,8 @@ return new class extends Migration
             $table->string('actionPB2')->nullable(); // PB4L category for action2.
             $table->string('actionPB3')->nullable(); // PB4L category for action3.
             $table->string('teacher')->nullable(); // Teacher associated with the record.
-            $table->integer('points')->default(0); // Points earned (positive value).
-            $table->integer('demerits')->default(0); // Demerits earned (punitive value).
+            $table->integer('points')->nullable(); // Points earned (positive value).
+            $table->integer('demerits')->nullable(); // Demerits earned (punitive value).
             $table->date('dateevent')->nullable(); // Date the event occurred (YYYYMMDD).
             $table->time('timeevent')->nullable(); // Time the event occurred (HHMMSS).
             $table->date('datedue')->nullable(); // Due date for action completion.

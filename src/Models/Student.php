@@ -2,6 +2,7 @@
 
 namespace Wing5wong\KamarDirectoryServices\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
@@ -63,7 +64,6 @@ class Student extends Model
 
     // Define attributes that should be cast to specific types
     protected $casts = [
-        'uuid' => 'uuid',
         'ethnicity' => 'array',
         'iwi' => 'array',
         'timetabletop' => 'array',
@@ -85,5 +85,14 @@ class Student extends Model
     public function attendances()
     {
         return $this->hasMany(Attendance::class, 'student_id', 'id');
+    }
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                return $this->attributes["firstname"] . " " . $this->attributes["lastname"];
+            }
+        );
     }
 }
