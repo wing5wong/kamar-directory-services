@@ -60,7 +60,7 @@ return new class extends Migration
             $table->boolean('networkaccess')->default(1); // Internet access allowed (0 or 1).
             $table->string('althomedrive')->nullable(); // Alternate network home drive location.
             $table->string('altdescription')->nullable(); // Alternate network user description.
-            $table->json('residences')->nullable(); // Information about the student's residence.
+            $table->text('residence')->nullable(); // Information about the student's residence.
             $table->json('caregivers')->nullable(); // List of caregivers associated with the student.
             $table->json('groups')->nullable(); // List of teams/groups and timetable classes.
             $table->json('awards')->nullable(); // List of student awards.

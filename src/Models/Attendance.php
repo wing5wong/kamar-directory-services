@@ -23,10 +23,4 @@ class Attendance extends Model
     {
         return $this->belongsTo(Student::class, 'student_id', 'student_id');
     }
-
-    // Define the cast for the 'codes' and 'alt' fields to be treated as arrays.
-    protected $casts = [
-        'codes' => 'array',
-        'alt' => 'array',
-    ];
 }

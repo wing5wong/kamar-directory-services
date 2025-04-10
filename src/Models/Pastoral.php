@@ -97,27 +97,40 @@ class Pastoral extends Model
             get: function ($value) {
                 $time = Carbon::parse($this->attributes['timeevent'])->format('H:i');
 
-                // Define time ranges and their corresponding labels
-                $periods = [
-                    ['00:00', '08:39', 'BEFORE SCHOOL'],
-                    ['08:40', '09:04', 'FT'],
-                    ['09:05', '10:04', 'PERIOD 1'],
-                    ['10:05', '11:04', 'PERIOD 2'],
-                    ['11:05', '11:49', '1ST BREAK'],
-                    ['11:50', '12:49', 'PERIOD 3'],
-                    ['12:50', '13:49', 'PERIOD 4'],
-                    ['13:50', '14:04', '2ND BREAK'],
-                    ['14:05', '15:04', 'PERIOD 5'],
-                    ['15:05', '23:59', 'AFTER SCHOOL'],
+                $day = $this->dateevent->dayOfWeek; //1 mon, 5 friday
+                $timeframes = [];
+                for ($i = 1; $i <= 5; $i++) {
+                    $timeframes[$i] = [
+                        ['00:00', '08:49', 'BEFORE SCHOOL'],
+                        ['08:50', '09:49', 'PERIOD 1'],
+                        ['09:50', '10:04', 'FT'],
+                        ['10:05', '11:04', 'PERIOD 2'],
+                        ['11:05', '11:49', '1ST BREAK'],
+                        ['11:50', '12:49', 'PERIOD 3'],
+                        ['12:50', '13:49', 'PERIOD 4'],
+                        ['13:50', '14:04', '2ND BREAK'],
+                        ['14:05', '15:04', 'PERIOD 5'],
+                        ['15:05', '23:59', 'AFTER SCHOOL'],
+                    ];
+                }
+                $timeframes[5] = [
+                    ['00:00', '08:49', 'BEFORE SCHOOL'],
+                    ['08:50', '09:49', 'PERIOD 1'],
+                    ['09:50', '10:19', 'FT'],
+                    ['10:20', '11:19', 'PERIOD 2'],
+                    ['11:20', '12:04', '1ST BREAK'],
+                    ['12:05', '13:04', 'PERIOD 3'],
+                    ['13:05', '14:04', 'PERIOD 4'],
+                    ['14:05', '23:59', 'AFTER SCHOOL']
                 ];
 
                 // Iterate through the periods and find a match
-                foreach ($periods as [$start, $end, $label]) {
+                foreach ($timeframes[$day] as [$start, $end, $label]) {
                     if ($time >= $start && $time <= $end) {
                         return $label;
                     }
                 }
-                return null; // Handle unexpected cases
+                return 'OUT OF SCHOOL HOURS'; // Handle unexpected cases
             }
         );
     }

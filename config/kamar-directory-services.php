@@ -38,7 +38,7 @@ return [
             "learningsupport" => false,
             "fields" => [
                 "required" =>  "uniqueid;firstname;lastname;username;password",
-                "optional" => "schoolindex;nsn;yearlevel;leavingdate;tutor"
+                "optional" => "schoolindex;nsn;yearlevel;leavingdate;tutor;house;ethnicityL1;ethnicityL2;ethnicity,gender"
             ]
         ],
 

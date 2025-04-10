@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('student_id'); // National Student Number.
             $table->string('nsn'); // National Student Number.
             $table->date('date'); // Date of attendance (YYYYMMDD).
-            $table->json('codes'); // Raw attendance data (one for each time slot, dots for unused).
-            $table->json('alt'); // Ministry of Education's truancy codes (one for each time slot).
+            $table->string('codes'); // Raw attendance data (one for each time slot, dots for unused).
+            $table->string('alt'); // Ministry of Education's truancy codes (one for each time slot).
             $table->integer('hdu')->default(0); // Count of half days for unjustified absences.
             $table->integer('hdj')->default(0); // Count of half days for justified absences.
             $table->integer('hdp')->default(0); // Count of half days present.
