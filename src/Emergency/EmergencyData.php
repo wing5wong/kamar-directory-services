@@ -33,6 +33,6 @@ class EmergencyData
 
     public function isEmergencyCompletion(): bool
     {
-        return in_array($this->procedure, [self::PROCEDURE_ALL_CLEAR, self::PROCEDURE_EVENT_OVER], true);
+        return in_array($this->status, [self::PROCEDURE_ALL_CLEAR, self::PROCEDURE_EVENT_OVER], true);
     }
 }
