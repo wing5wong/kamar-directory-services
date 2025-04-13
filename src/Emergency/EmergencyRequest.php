@@ -28,7 +28,7 @@ class EmergencyRequest extends FormRequest
             'id' => 'required',
             'isEmergency' => 'required|boolean',
             'procedure' => 'required|in:Evacuate,Lockdown',
-            'status' => 'required|in:Alert,Count complete,All clear, Event over',
+            'status' => 'required|in:Alert,Count complete,All clear,Event over',
             'unixTime' => 'required|numeric',
         ];
     }
@@ -36,9 +36,9 @@ class EmergencyRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'groupType.in' => 'Must be one of: tutor group, current class',
-            'procedure.in' => 'Must be one of: Evacuate, Lockdown',
-            'status.in' => 'Must be one of:Alert, Count complete, All clear, Event over',
+            'groupType.in' => 'Must be one of: Tutor group,Current class',
+            'procedure.in' => 'Must be one of: Evacuate,Lockdown',
+            'status.in' => 'Must be one of:Alert,Count complete,All clear,Event over',
         ];
     }
 }
