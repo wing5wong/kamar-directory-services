@@ -4,6 +4,10 @@ namespace Wing5wong\KamarDirectoryServices\Emergency;
 
 class EmergencyData
 {
+    const PROCEDURE_ALERT = 'Alert';
+    const PROCEDURE_ALL_CLEAR = 'All clear';
+    const PROCEDURE_EVENT_OVER = 'Event over';
+
     public function __construct(
         public string $message,
         public string $groupType,
@@ -25,5 +29,10 @@ class EmergencyData
             $request->validated('status'),
             $request->validated('unixTime')
         );
+    }
+
+    public function isEmergencyCompletion(): bool
+    {
+        return in_array($this->procedure, [self::PROCEDURE_ALL_CLEAR, self::PROCEDURE_EVENT_OVER], true);
     }
 }
