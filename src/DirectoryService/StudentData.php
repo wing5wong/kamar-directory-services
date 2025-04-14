@@ -57,6 +57,8 @@ class StudentData
         public ?array $groups,
         public ?array $awards,
         public ?array $datasharing,
+        public ?string $passwordencrypted,
+        public ?bool $resetpassword = false,
     ) {}
 
     public static function fromArray(array $data): self
@@ -113,6 +115,8 @@ class StudentData
             groups: $data['groups'] ?? null,
             awards: $data['awards'] ?? null,
             datasharing: $data['datasharing'] ?? null,
+            passwordencrypted: $data['passwordencrypted'] ?? null,
+            resetpassword: (bool)($data['resetpassword'] ?? false),
         );
     }
     public function toArray(): array
