@@ -6,7 +6,7 @@ class StudentData
 {
     public function __construct(
         public string $student_id,
-        public string $role = 'Student',
+        public string $role,
         public ?string $uuid,
         public ?int $schoolindex,
         public ?string $nsn,
@@ -65,6 +65,7 @@ class StudentData
     {
         return new self(
             student_id: $data['id'],
+            role: 'Student',
             uuid: $data['uuid'] ?? null,
             schoolindex: $data['schoolindex'] ?? null,
             nsn: $data['nsn'] ?? null,

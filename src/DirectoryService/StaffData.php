@@ -6,7 +6,7 @@ class StaffData
 {
     public function __construct(
         public string $staff_id, // staff code e.g. ANS
-        public string $role = 'Staff',
+        public string $role,
         public ?string $uuid,
         public ?int $schoolindex,
         public ?string $created,
@@ -33,6 +33,7 @@ class StaffData
     {
         return new self(
             staff_id: $data['id'],
+            role: 'Staff',
             uuid: $data['uuid'] ?? null,
             schoolindex: $data['schoolindex'] ?? null,
             created: $data['created'] ?? null,
