@@ -2,13 +2,18 @@
 
 namespace Wing5wong\KamarDirectoryServices\DirectoryService;
 
+use Illuminate\Support\Str;
+
 class StaffData
 {
+    const DEPARTMENT_PREFIX = "Dept-";
+    const CLASSIFICATION_PREFIX = "Staff-";
+
     public function __construct(
         public string $staff_id, // staff code e.g. ANS
         public string $role,
         public ?string $uuid,
-        public ?int $schoolindex,
+        public ?array $schoolindex,
         public ?string $created,
         public ?string $uniqueid,
         public ?string $username,
@@ -35,7 +40,7 @@ class StaffData
             staff_id: $data['id'],
             role: 'Staff',
             uuid: $data['uuid'] ?? null,
-            schoolindex: $data['schoolindex'] ?? null,
+            schoolindex: $data['schoolindex'] ?? [],
             created: $data['created'] ?? null,
             uniqueid: $data['uniqueid'] ?? null,
             username: $data['username'] ?? null,
@@ -83,5 +88,35 @@ class StaffData
             'mobile' => $this->mobile,
             'groups' => $this->groups,
         ];
+    }
+
+    public function getSchools()
+    {
+        return collect($this->schoolindex);
+    }
+
+    public function getClassificationGroups()
+    {
+        return collect($this->groups)->filter(function ($group) {
+            return $group['type'] === 'department' && str_starts_with($group['name'], StaffData::CLASSIFICATION_PREFIX);
+        })->each(function ($group) {
+            $group['name'] = Str::after($group['name'], StaffData::CLASSIFICATION_PREFIX);
+        });
+    }
+
+    public function getDepartmentGroups()
+    {
+        return collect($this->groups)->filter(function ($group) {
+            return $group['type'] === 'department' && str_starts_with($group['name'], StaffData::DEPARTMENT_PREFIX);
+        })->each(function ($group) {
+            $group['name'] = Str::after($group['name'], StaffData::DEPARTMENT_PREFIX);
+        });
+    }
+
+    public function getClassGroups()
+    {
+        return collect($this->groups)
+            ->filter(fn($group) => $group['type'] === 'class')
+            ->map(fn($group) => "{$group['subject']}-{$group['coreoption']}");
     }
 }

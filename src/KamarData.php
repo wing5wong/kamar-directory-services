@@ -157,6 +157,11 @@ class KamarData
         return collect(data_get($this->data, 'SMSDirectoryData.pastoral.data'));
     }
 
+    public function getRecognitions()
+    {
+        return collect(data_get($this->data, 'SMSDirectoryData.recognitions.data'));
+    }
+
     public function getNotices()
     {
         return collect(data_get($this->data, 'SMSDirectoryData.notices.data'));

@@ -177,4 +177,11 @@ class StudentData
             'datasharing' => $this->datasharing,
         ];
     }
+
+    private function getClassGroups()
+    {
+        return collect($this->groups)
+            ->filter(fn($group) => $group['type'] === 'class')
+            ->map(fn($group) => "{$group['subject']}-{$group['coreoption']}");
+    }
 }

@@ -78,13 +78,13 @@ class Student extends Model
 
     public function pastoralRecords()
     {
-        return $this->hasMany(Pastoral::class, 'student_id', 'id');
+        return $this->hasMany(Pastoral::class, 'student_id', 'student_id');
     }
 
     // One student can have many attendance records
     public function attendances()
     {
-        return $this->hasMany(Attendance::class, 'student_id', 'id');
+        return $this->hasMany(Attendance::class, 'student_id', 'student_id');
     }
 
     protected function fullName(): Attribute
