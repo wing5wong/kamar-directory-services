@@ -28,9 +28,10 @@ class StaffData
         public ?string $house,
         public ?string $startingdate,
         public ?string $leavingdate,
-        public ?string $photocoperid,
+        public ?string $photocopierid,
         public ?string $email,
         public ?string $mobile,
+        public ?string $extension,
         public ?array $groups,
     ) {}
 
@@ -55,9 +56,10 @@ class StaffData
             house: $data['house'] ?? null,
             startingdate: $data['startingdate'] ?? null,
             leavingdate: $data['leavingdate'] ?? null,
-            photocoperid: $data['photocoperid'] ?? null,
+            photocopierid: $data['photocopierid'] ?? null,
             email: $data['email'] ?? null,
             mobile: $data['mobile'] ?? null,
+            extension: $data['extension'] ?? null,
             groups: $data['groups'] ?? null,
         );
     }
@@ -72,20 +74,21 @@ class StaffData
             'created' => $this->created,
             'uniqueid' => $this->uniqueid,
             'username' => $this->username,
-            'title' => $this->title,
+            //'title' => $this->title,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
             'gender' => $this->gender,
             'datebirth' => $this->datebirth,
-            'classification' => $this->classification,
-            'position' => $this->position,
+            //'classification' => $this->classification,
+            //'position' => $this->position,
             'tutor' => $this->tutor,
             'house' => $this->house,
-            'photocoperid' => $this->photocoperid,
+            'photocopierid' => $this->photocopierid,
             'startingdate' => $this->startingdate,
             'leavingdate' => $this->leavingdate,
             'email' => $this->email,
             'mobile' => $this->mobile,
+            'extension' => $this->extension,
             'groups' => $this->groups,
         ];
     }
@@ -99,8 +102,9 @@ class StaffData
     {
         return collect($this->groups)->filter(function ($group) {
             return $group['type'] === 'department' && str_starts_with($group['name'], StaffData::CLASSIFICATION_PREFIX);
-        })->each(function ($group) {
+        })->map(function ($group) {
             $group['name'] = Str::after($group['name'], StaffData::CLASSIFICATION_PREFIX);
+            return $group;
         });
     }
 
@@ -108,8 +112,9 @@ class StaffData
     {
         return collect($this->groups)->filter(function ($group) {
             return $group['type'] === 'department' && str_starts_with($group['name'], StaffData::DEPARTMENT_PREFIX);
-        })->each(function ($group) {
+        })->map(function ($group) {
             $group['name'] = Str::after($group['name'], StaffData::DEPARTMENT_PREFIX);
+            return $group;
         });
     }
 

@@ -40,6 +40,7 @@ class Staff extends Model
     // Define attributes that should be cast to specific types
     protected $casts = [
         'groups' => 'array',
+        'schoolindex' => 'array',
     ];
 
     protected function fullName(): Attribute
@@ -47,6 +48,22 @@ class Staff extends Model
         return Attribute::make(
             get: function ($value) {
                 return $this->attributes["firstname"] . " " . $this->attributes["lastname"];
+            }
+        );
+    }
+
+    protected function originalUUID(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $encoded = $this->attributes["uuid"];
+                $hex = '';
+                while (bccomp($encoded, '0') > 0) {
+                    $hex = dechex((int) bcmod($encoded, '16')) . $hex;
+                    $encoded = bcdiv($encoded, '16', 0);
+                }
+                $hex = str_pad($hex, 32, '0', STR_PAD_LEFT);
+                return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split($hex, 4));
             }
         );
     }

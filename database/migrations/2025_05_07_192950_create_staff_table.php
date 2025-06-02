@@ -20,6 +20,7 @@ return new class extends Migration
             $table->datetime('created')->nullable();
             $table->string('uniqueid')->nullable(); // School-editable unique ID number.
             $table->string('username')->nullable(); // Logon Username.
+            $table->string('title')->nullable(); // Preferred first name.
             $table->string('firstname')->nullable(); // Preferred first name.
             $table->string('lastname')->nullable(); // Preferred last name.
             $table->enum('gender', ['M', 'F'])->nullable(); // Gender (M or F).

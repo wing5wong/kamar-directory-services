@@ -99,7 +99,7 @@ class Pastoral extends Model
 
                 $day = $this->dateevent->dayOfWeek; //1 mon, 5 friday
                 $timeframes = [];
-                for ($i = 1; $i <= 5; $i++) {
+                for ($i = 0; $i <= 4; $i++) {
                     $timeframes[$i] = [
                         ['00:00', '08:49', 'BEFORE SCHOOL'],
                         ['08:50', '09:49', 'PERIOD 1'],
@@ -113,6 +113,18 @@ class Pastoral extends Model
                         ['15:05', '23:59', 'AFTER SCHOOL'],
                     ];
                 }
+                $timeframes[6] = [
+                    ['00:00', '08:49', 'BEFORE SCHOOL'],
+                    ['08:50', '09:49', 'PERIOD 1'],
+                    ['09:50', '10:04', 'FT'],
+                    ['10:05', '11:04', 'PERIOD 2'],
+                    ['11:05', '11:49', '1ST BREAK'],
+                    ['11:50', '12:49', 'PERIOD 3'],
+                    ['12:50', '13:49', 'PERIOD 4'],
+                    ['13:50', '14:04', '2ND BREAK'],
+                    ['14:05', '15:04', 'PERIOD 5'],
+                    ['15:05', '23:59', 'AFTER SCHOOL'],
+                ];
                 $timeframes[5] = [
                     ['00:00', '08:49', 'BEFORE SCHOOL'],
                     ['08:50', '09:49', 'PERIOD 1'],
