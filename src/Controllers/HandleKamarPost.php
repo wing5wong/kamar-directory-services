@@ -2,21 +2,18 @@
 
 namespace Wing5wong\KamarDirectoryServices\Controllers;
 
-use App\Jobs\ProcessAttendance;
-use App\Jobs\ProcessNotices;
-use App\Jobs\ProcessPastorals;
-use App\Jobs\ProcessStaff;
-use App\Jobs\ProcessStudent;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
-use Wing5wong\KamarDirectoryServices\DirectoryService\AttendanceData;
 use Wing5wong\KamarDirectoryServices\KamarData;
 use Wing5wong\KamarDirectoryServices\DirectoryService\DirectoryServiceRequest;
-use Wing5wong\KamarDirectoryServices\DirectoryService\PastoralData;
-use Wing5wong\KamarDirectoryServices\DirectoryService\StaffData;
-use Wing5wong\KamarDirectoryServices\DirectoryService\StudentData;
+use Wing5wong\KamarDirectoryServices\Events\AttendanceDataReceived;
+use Wing5wong\KamarDirectoryServices\Events\CalendarDataReceived;
 use Wing5wong\KamarDirectoryServices\Events\KamarPostStored;
+use Wing5wong\KamarDirectoryServices\Events\NoticeDataReceived;
+use Wing5wong\KamarDirectoryServices\Events\PastoralDataReceived;
+use Wing5wong\KamarDirectoryServices\Events\RecognitionDataReceived;
+use Wing5wong\KamarDirectoryServices\Events\StaffDataReceived;
+use Wing5wong\KamarDirectoryServices\Events\StudentDataReceived;
 use Wing5wong\KamarDirectoryServices\Responses\Check\Success as CheckSuccess;
 use Wing5wong\KamarDirectoryServices\Responses\Check\XMLSuccess as XMLCheckSuccess;
 use Wing5wong\KamarDirectoryServices\Responses\Standard\{Success, MissingData};
@@ -24,8 +21,25 @@ use Wing5wong\KamarDirectoryServices\Responses\Standard\{XMLSuccess, XMLMissingD
 
 class HandleKamarPost extends Controller
 {
+    private const SYNC_EVENT_MAP = [
+        KamarData::SYNC_TYPE_PART  => [
+            [StaffDataReceived::class, 'getStaff'],
+            [StudentDataReceived::class, 'getStudents'],
+        ],
+        KamarData::SYNC_TYPE_FULL  => [
+            [StaffDataReceived::class, 'getStaff'],
+            [StudentDataReceived::class, 'getStudents'],
+        ],
+        KamarData::SYNC_TYPE_PASTORAL     => [[PastoralDataReceived::class, 'getPastoral']],
+        KamarData::SYNC_TYPE_ATTENDANCE   => [[AttendanceDataReceived::class, 'getAttendance']],
+        KamarData::SYNC_TYPE_RECOGNITIONS => [[RecognitionDataReceived::class, 'getRecognitions']],
+        KamarData::SYNC_TYPE_NOTICES      => [[NoticeDataReceived::class, 'getNotices']],
+        KamarData::SYNC_TYPE_CALENDAR      => [[CalendarDataReceived::class, 'getCalendar']],
+    ];
+
+    protected KamarData $data;
+
     public function __construct(
-        protected KamarData $data,
         protected DirectoryServiceRequest $request
     ) {
         $this->data = KamarData::fromRequest($request);
@@ -48,7 +62,7 @@ class HandleKamarPost extends Controller
             return response()->json(new MissingData());
         }
         if ($this->data->isXml()) {
-            return response()->xml((string)(new XmlMissingData()));
+            return response()->xml((string)(new XMLMissingData()));
         }
     }
 
@@ -67,9 +81,9 @@ class HandleKamarPost extends Controller
 
     private function handleOKResponse()
     {
-        //$this->storeKamarData();
-        // TODO: should send events here rather tahn dispatch the job. allow consumer to listen to events and handle jobs themselves.
-        $this->dispatchJobs();
+        $this->storeKamarData();
+
+        $this->sendOkEvents();
 
         if ($this->data->isJson()) {
             return response()->json(new Success());
@@ -78,39 +92,16 @@ class HandleKamarPost extends Controller
             return response()->xml((string)(new XmlSuccess()));
         }
     }
-    private function dispatchJobs()
+
+    private function sendOkEvents()
     {
-        if ($this->data->isSyncPart() || $this->data->isSyncFull()) {
-            $this->processMappedRecordDataOnQueue('students', ProcessStudent::class, $this->data->getStudents(), StudentData::class);
-            $this->processMappedRecordDataOnQueue('staff', ProcessStaff::class, $this->data->getStaff(), StaffData::class);
+        $currentType = $this->data->getSyncType();
+
+        if (isset(self::SYNC_EVENT_MAP[$currentType])) {
+            foreach (self::SYNC_EVENT_MAP[$currentType] as [$eventClass, $getter]) {
+                event(new $eventClass($this->data->{$getter}()));
+            }
         }
-
-        if ($this->data->isSyncType(KamarData::SYNC_TYPE_PASTORAL)) {
-            $this->processMappedRecordDataOnQueue('pastorals', ProcessPastorals::class, $this->data->getPastoral(), PastoralData::class);
-        }
-
-        if ($this->data->isSyncType(KamarData::SYNC_TYPE_ATTENDANCE)) {
-            $this->processMappedRecordDataOnQueue('attendances', ProcessAttendance::class, $this->data->getAttendance(), AttendanceData::class);
-        }
-
-        if ($this->data->isSyncType(KamarData::SYNC_TYPE_NOTICES)) {
-            ProcessNotices::dispatch($this->data->getNotices())->onQueue('notices');
-        }
-    }
-
-    private function processMappedRecordDataOnQueue(string $type, string $jobClass, Collection $records, string $dataClass): void
-    {
-        info("[start] Processing {$type} ({$records->count()} records)");
-
-        $records->each(function ($record, $i) use ($type, $dataClass, $jobClass) {
-            $dataObject = $dataClass::fromArray($record);
-            $job = new $jobClass($dataObject);
-
-            info("Dispatching {$type} #{$i}");
-            dispatch($job)->onQueue($type);
-        });
-
-        info("[finish] Processing {$type}");
     }
 
     private function storeKamarData()
@@ -121,6 +112,6 @@ class HandleKamarPost extends Controller
                 config('kamar-directory-services.storageFolder') . DIRECTORY_SEPARATOR . $filename,
                 $this->request->getContent()
             );
-        event(new KamarPostStored($filename));
+        //event(new KamarPostStored($filename));
     }
 }

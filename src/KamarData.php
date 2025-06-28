@@ -20,6 +20,8 @@ class KamarData
     const SYNC_TYPE_NOTICES = 'notices';
     const SYNC_TYPE_PASTORAL = 'pastoral';
     const SYNC_TYPE_PHOTOS = 'photos';
+    const SYNC_TYPE_RECOGNITIONS = 'recognitions';
+    const SYNC_TYPE_RECOGNITIONOPTIONS = 'recognitionoptions';
     const SYNC_TYPE_STAFFPHOTOS = 'staffphotos';
     const SYNC_TYPE_STUDENTTIMETABLES = 'studenttimetables';
     const SYNC_TYPE_STAFFTIMETABLES = 'stafftimetables';
@@ -149,7 +151,10 @@ class KamarData
 
     public function getAttendance()
     {
-        return collect(data_get($this->data, 'SMSDirectoryData.attendance.data'));
+        return collect(data_get($this->data, 'SMSDirectoryData.attendance.data'))
+            ->filter(function ($student) {
+                return !empty($student['nsn']);
+            });
     }
 
     public function getPastoral()
@@ -162,6 +167,11 @@ class KamarData
         return collect(data_get($this->data, 'SMSDirectoryData.recognitions.data'));
     }
 
+    public function getRecognitionOptions()
+    {
+        return collect(data_get($this->data, 'SMSDirectoryData.recognitionoptions.data'));
+    }
+
     public function getNotices()
     {
         return collect(data_get($this->data, 'SMSDirectoryData.notices.data'));
@@ -170,6 +180,11 @@ class KamarData
     public function getResults()
     {
         return collect(data_get($this->data, 'SMSDirectoryData.results.data'));
+    }
+
+    public function getCalendar()
+    {
+        return collect(data_get($this->data, 'SMSDirectoryData.calendars'));
     }
 
     private function setData($data, $format)

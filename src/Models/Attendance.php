@@ -18,9 +18,12 @@ class Attendance extends Model
         'hdp',
     ];
 
-    // Define the relationship with the student (assuming the Student model exists).
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id', 'student_id');
     }
+
+    protected $casts = [
+        'date' => 'date',
+    ];
 }

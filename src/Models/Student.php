@@ -63,7 +63,6 @@ class Student extends Model
         'datasharing'
     ];
 
-    // Define attributes that should be cast to specific types
     protected $casts = [
         'ethnicity' => 'array',
         'iwi' => 'array',
@@ -86,6 +85,11 @@ class Student extends Model
     public function attendances()
     {
         return $this->hasMany(Attendance::class, 'student_id', 'student_id');
+    }
+
+    public function recognitions()
+    {
+        return $this->hasMany(Recognition::class, 'student_id', 'student_id');
     }
 
     protected function fullName(): Attribute
