@@ -81,7 +81,9 @@ class HandleKamarPost extends Controller
 
     private function handleOKResponse()
     {
-        $this->storeKamarData();
+        if (config('kamar-directory-services.storePostData')) {
+            $this->storeKamarData();
+        }
 
         $this->sendOkEvents();
 

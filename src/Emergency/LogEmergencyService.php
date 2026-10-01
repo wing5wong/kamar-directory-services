@@ -16,6 +16,7 @@ class LogEmergencyService implements EmergencyServiceInterface
             "procedure" => $data->procedure,
             "status" => $data->status,
             "unixTime" => $data->unixTime,
+            "test" => $data->test
         ]);
     }
 }

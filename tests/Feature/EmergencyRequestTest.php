@@ -16,6 +16,7 @@ class EmergencyRequestTest extends TestCase
 
     public function test_requires_valid_fields()
     {
+        $this->withoutExceptionHandling();
         $response = $this->postJson(
             '/kamar/emergency',
             [

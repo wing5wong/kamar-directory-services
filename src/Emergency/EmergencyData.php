@@ -16,6 +16,7 @@ class EmergencyData
         public string $procedure,
         public string $status,
         public int $unixTime,
+        public bool $test,
     ) {}
 
     public static function fromRequest(EmergencyRequest $request): EmergencyData
@@ -27,7 +28,8 @@ class EmergencyData
             $request->validated('isEmergency'),
             $request->validated('procedure'),
             $request->validated('status'),
-            $request->validated('unixTime')
+            $request->validated('unixTime'),
+            $request->validated('test') ?? false,
         );
     }
 

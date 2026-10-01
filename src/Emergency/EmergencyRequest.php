@@ -27,9 +27,10 @@ class EmergencyRequest extends FormRequest
             'groupType' => 'required|in:Tutor group,Current class',
             'id' => 'required',
             'isEmergency' => 'required|boolean',
-            'procedure' => 'required|in:Evacuate,Lockdown',
-            'status' => 'required|in:Alert,Count complete,All clear,Event over',
+            'procedure' => 'required|in:Evacuate,Lockdown,Shelter in Place',
+            'status' => 'required|in:Alert,Count complete,All clear,Message,Event over',
             'unixTime' => 'required|numeric',
+            'test' => 'sometimes|boolean',
         ];
     }
 
@@ -37,8 +38,8 @@ class EmergencyRequest extends FormRequest
     {
         return [
             'groupType.in' => 'Must be one of: Tutor group,Current class',
-            'procedure.in' => 'Must be one of: Evacuate,Lockdown',
-            'status.in' => 'Must be one of:Alert,Count complete,All clear,Event over',
+            'procedure.in' => 'Must be one of: Evacuate,Lockdown,Shelter in Place',
+            'status.in' => 'Must be one of:Alert,Count complete,All clear,Message,Event over',
         ];
     }
 }

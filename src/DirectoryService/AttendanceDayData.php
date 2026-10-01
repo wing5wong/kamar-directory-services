@@ -20,8 +20,19 @@ class AttendanceDayData
         $this->hdj = $this->hdj ?? 0;
     }
 
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            $data['date'],
+            $data['codes'],
+            $data['alt'],
+            $data['hdu'] ?? 0,
+            $data['hdj'] ?? 0,
+            $data['hdp'] ?? 0
+        );
+    }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'date' => $this->date,

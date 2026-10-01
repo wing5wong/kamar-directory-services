@@ -7,6 +7,7 @@ return [
     'encryptionKey' => env('KAMAR_ENCRYPTION_KEY', 'My Kamar directory service encryption key, if applicable'),
     'encryptionAlgorithm' => env('KAMAR_ENCRYPTION_ALGORITHM', 'aes-128-ecb'),
 
+    'storePostData' => env('KAMAR_DS_STORE_POST_DATA', true),
     'storageDisk' => env('KAMAR_DS_STORAGE_DISK', 'local'),
     'storageFolder' => env('KAMAR_DS_STORAGE_FOLDER', 'data'),
 

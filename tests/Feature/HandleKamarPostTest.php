@@ -91,13 +91,14 @@ class HandleKamarPostTest extends TestCase
 
     public function test_authenticated_standard_requests_return_success()
     {
+        $this->withoutExceptionHandling();
         Event::fake();
 
         $response = $this->withHeaders([
             'HTTP_AUTHORIZATION' => $this->validCredentials(),
         ])->postJson(
             route('kamar'),
-            ['SMSDirectoryData' => ['sync' => 'part']]
+            ['SMSDirectoryData' => ['sync' => KamarData::SYNC_TYPE_PART]]
         );
 
         $response->assertJson((new Success())->toArray());

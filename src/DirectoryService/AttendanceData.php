@@ -4,19 +4,23 @@ namespace Wing5wong\KamarDirectoryServices\DirectoryService;
 
 class AttendanceData
 {
+    /**
+     * @param AttendanceDayData[] $values
+     */
     public function __construct(
         public int $studentId,
         public string $nsn,
+        /** @var AttendanceDayData[] */
         public array $values
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray(array $data): self
     {
         return new self(
             $data['id'],
             $data['nsn'],
-            collect($data['values'])->map(function ($day) use ($data) {
-                return new AttendanceDayData($day['date'], $day['codes'], $day['alt'], $day['hdu'], $day['hdj'], $day['hdp']);
+            collect($data['values'])->map(function ($day): AttendanceDayData {
+                return AttendanceDayData::fromArray($day);
             })->all()
         );
     }
@@ -25,20 +29,7 @@ class AttendanceData
     {
         $data = json_decode($json, true);
 
-        return new self(
-            $data['id'],
-            $data['nsn'],
-            array_map(function ($value) {
-                return new AttendanceDayData(
-                    $value['date'],
-                    $value['codes'],
-                    $value['alt'],
-                    $value['hdu'],
-                    $value['hdj'],
-                    $value['hdp']
-                );
-            }, $data['values'])
-        );
+        return self::fromArray($data);
     }
 
 
